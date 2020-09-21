@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Cart} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -11,14 +11,22 @@ async function seed() {
     User.create({
       userName: 'robot',
       email: 'cody@email.com',
-      password: '123',
-      address: '1512034rd Rd flushing'
+      password: '123'
     }),
-    User.create({email: 'murphy@email.com', password: '123'}),
-    User.create({email: 'ericdag@sina.com', password: '123'})
+    User.create({
+      email: 'murphy@email.com',
+      password: '123',
+      userName: 'big bird'
+    }),
+    User.create({email: 'ericdag@sina.com', password: '123', userName: 'elmo'})
   ])
+  const [robot, bigbird, elmo] = users
 
-  console.log(`seeded ${users.length} users`)
+  const cart = await Cart.create({items: [{}, {}]})
+
+  robot.addCart(cart)
+
+  cart.console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }
 

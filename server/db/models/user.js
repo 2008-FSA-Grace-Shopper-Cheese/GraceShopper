@@ -33,10 +33,12 @@ const User = db.define('user', {
     allowNull: false
   },
   address: {
-    type: Sequelize.TEXT
+    type: Sequelize.TEXT,
+    defaultValue: '123 Seasame Street'
   },
   phoneNumber: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    defaultValue: '212-867-5309'
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,
