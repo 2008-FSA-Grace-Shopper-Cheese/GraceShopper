@@ -26,6 +26,21 @@ const User = db.define('user', {
   },
   googleId: {
     type: Sequelize.STRING
+  },
+  userName: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false
+  },
+  address: {
+    type: Sequelize.TEXT
+  },
+  phoneNumber: {
+    type: Sequelize.STRING
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   }
 })
 
