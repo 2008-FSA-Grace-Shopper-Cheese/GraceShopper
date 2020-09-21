@@ -16,7 +16,8 @@ const Cheese = require('./cheese')
  * instead of: const User = require('../db/models/user')
  */
 
- User.hasOne(Cart);
+User.hasOne(Cart)
+Cart.hasOne(User)
 
 module.exports = {
   User,
