@@ -20,7 +20,7 @@ async function seed() {
     }),
     User.create({email: 'ericdag@sina.com', password: '123', userName: 'elmo'})
   ])
-  const [robot, bigbird, elmo] = users
+  const [robot] = users
 
   const cart = await Cart.create({items: [{}, {}]})
 
