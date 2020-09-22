@@ -17,7 +17,7 @@ const Cheese = require('./cheese')
  */
 
 User.hasOne(Cart)
-Cart.hasOne(User)
+Cart.belongsTo(User)
 
 module.exports = {
   User,

@@ -24,9 +24,9 @@ async function seed() {
 
   const cart = await Cart.create({items: [{}, {}]})
 
-  robot.addCart(cart)
+  await robot.setCart(cart)
 
-  cart.console.log(`seeded ${users.length} users`)
+  console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }
 
