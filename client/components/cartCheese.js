@@ -1,5 +1,7 @@
 import {InputLabel} from '@material-ui/core'
 import {MenuItem} from 'material-ui'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
 import React, {Component} from 'react'
 
 export default class cartCheese extends Component {
@@ -15,6 +17,7 @@ export default class cartCheese extends Component {
     //using reducer remove item from inside the cart state
   }
   render() {
+    console.log('this.props', this)
     const {id, name, image, price, quantity} = this.props
     return (
       <div className="item_in_Checkout">
@@ -25,25 +28,28 @@ export default class cartCheese extends Component {
             <small>$</small>
             <strong>{price}</strong>
           </p>
-          <InputLabel id="label">Quantity</InputLabel>
-          <select
-            labelId="label"
-            id="select"
-            value={quantity}
-            onChange={this.handleChange}
-          >
-            {/* define a onchange */}
-            <MenuItem value="1"> 1 </MenuItem>
-            <MenuItem value="2"> 2 </MenuItem>
-            <MenuItem value="3"> 3 </MenuItem>
-            <MenuItem value="4"> 4 </MenuItem>
-            <MenuItem value="5"> 5 </MenuItem>
-            <MenuItem value="6"> 6 </MenuItem>
-            <MenuItem value="7"> 7 </MenuItem>
-            <MenuItem value="8"> 8 </MenuItem>
-            <MenuItem value="9"> 9 </MenuItem>
-            <MenuItem value="10"> 10 </MenuItem>
-          </select>
+          <div>
+            <FormControl>
+              <InputLabel id="label">Quantity</InputLabel>
+              <Select
+                labelId="label"
+                id="select"
+                value={quantity}
+                onChange={this.handleChange}
+              >
+                <MenuItem value={1}> 1 </MenuItem>
+                <MenuItem value={2}> 2 </MenuItem>
+                <MenuItem value={3}> 3 </MenuItem>
+                <MenuItem value={4}> 4 </MenuItem>
+                <MenuItem value={5}> 5 </MenuItem>
+                <MenuItem value={6}> 6 </MenuItem>
+                <MenuItem value={7}> 7 </MenuItem>
+                <MenuItem value={8}> 8 </MenuItem>
+                <MenuItem value={9}> 9 </MenuItem>
+                <MenuItem value={10}> 10 </MenuItem>
+              </Select>
+            </FormControl>
+          </div>
         </div>
         <button type="button" onClick={this.handleClick}>
           Remove from Cart

@@ -1,5 +1,5 @@
 import React from 'react'
-import cartCheese from './cartCheese'
+import CartCheese from './cartCheese'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
@@ -49,7 +49,7 @@ export function shoppingCart() {
       {/* <div>item 1</div> */}
       <div>
         {cart.map(cheese => (
-          <cartCheese
+          <CartCheese
             key={cheese.id}
             id={cheese.id}
             name={cheese.name}
