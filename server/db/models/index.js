@@ -1,6 +1,8 @@
 const User = require('./user')
 const Cart = require('./cart')
 const Cheese = require('./cheese')
+const db = require('../db')
+// const {Sequelize} = require('sequelize/types')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -18,6 +20,18 @@ const Cheese = require('./cheese')
 
 User.hasOne(Cart)
 Cart.belongsTo(User)
+
+// const CheeseCart = db.define('CheeseCart', {
+//   quantity: {
+//     type: Sequelize.INTEGER
+//   },
+//   purchasePrice: {
+//     type: Sequelize.INTEGER
+//   }
+// })
+
+Cart.belongsToMany(Cheese, {through: 'CheeseCart'})
+Cheese.belongsToMany(Cart, {through: 'CheeseCart'})
 
 module.exports = {
   User,
