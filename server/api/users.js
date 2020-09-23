@@ -36,7 +36,7 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-// User login, gets user if userName and password matches
+// Gets user info from email, including cart
 router.get('/login', async (req, res, next) => {
   try {
     const user = await User.findOne({
@@ -52,6 +52,20 @@ router.get('/login', async (req, res, next) => {
     } else {
       res.sendStatus(400)
     }
+  } catch (err) {
+    next(err)
+  }
+})
+
+// User checkout info, posts to api/users/userId
+router.put('/:userId', async (req, res, next) => {
+  try {
+    const {address, phoneNumber} = req.body
+    const updatedUser = await User.update({
+      address,
+      phoneNumber
+    })
+    res.json(updatedUser)
   } catch (err) {
     next(err)
   }
