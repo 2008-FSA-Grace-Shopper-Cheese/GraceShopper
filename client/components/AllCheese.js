@@ -9,7 +9,6 @@ class AllCheese extends React.Component {
   // }
   componentDidMount() {
     this.props.getCheeses()
-    console.log(this.props.cheeses)
   }
 
   render() {
@@ -22,7 +21,7 @@ class AllCheese extends React.Component {
                 <div key={cheese.id}>
                   <img width={100} height={100} src={cheese.imageUrl} />
 
-                  <Link to={`cheeses/${cheese.id}`}>
+                  <Link to={`/cheeses/${cheese.id}`}>
                     <div>{cheese.name}</div>
                   </Link>
                   <button type="button">Add to Cart</button>

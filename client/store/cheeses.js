@@ -9,7 +9,6 @@ export const getCheeses = cheeses => {
 export const fetchCheeses = () => async dispatch => {
   try {
     const {data: cheeses} = await axios.get('/api/cheeses')
-    console.log(cheeses)
     dispatch(getCheeses(cheeses))
   } catch (error) {
     console.error(error)
