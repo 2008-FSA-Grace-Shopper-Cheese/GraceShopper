@@ -5,7 +5,7 @@ const {User, Cart} = require('../db/models')
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
-      attributes: ['id', 'email', 'userName']
+      attributes: ['id', 'email']
     })
     res.json(users)
   } catch (err) {
@@ -16,17 +16,16 @@ router.get('/', async (req, res, next) => {
 // User signup, posts to /api/users
 router.post('/', async (req, res, next) => {
   try {
-    const {userName, email, password} = req.body
+    const {email, password} = req.body
     const currentUser = await User.findOne({
       where: {
-        userName
+        email
       }
     })
     if (currentUser) {
       return res.sendStatus(400)
     }
     const newUser = await User.create({
-      userName,
       email,
       password
     })
