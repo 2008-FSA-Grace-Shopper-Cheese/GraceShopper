@@ -7,7 +7,7 @@ const Cheese = db.define('cheese', {
     allowNull: false
   },
   price: {
-    type: Sequelize.DOUBLE,
+    type: Sequelize.INTEGER,
     allowNull: false
   },
   description: {
@@ -17,7 +17,7 @@ const Cheese = db.define('cheese', {
   imageUrl: {
     type: Sequelize.TEXT,
     allowNull: false,
-    defaultValue: "https://images.heb.com/is/image/HEBGrocery/001199858"
+    defaultValue: 'https://images.heb.com/is/image/HEBGrocery/001199858'
   }
 })
 
