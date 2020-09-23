@@ -9,10 +9,10 @@ export default class CheckOoutCheese extends Component {
     this.handleClick = this.handleClick.bind(this)
   }
   handleChange() {
-    
+    // access the store and change the quantity inside the items in cart
   }
   handleClick() {
-    
+    //using reducer remove item from inside the cart state
   }
   render() {
     const {id, name, image, price, quantity} = this.props
@@ -45,7 +45,9 @@ export default class CheckOoutCheese extends Component {
             <MenuItem value="10"> 10 </MenuItem>
           </select>
         </div>
-        <button onClick={this.handleClick}>Remove from Cart</button>
+        <button type="button" onClick={this.handleClick}>
+          Remove from Cart
+        </button>
       </div>
     )
   }

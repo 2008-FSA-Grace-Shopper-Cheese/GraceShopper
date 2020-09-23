@@ -1,5 +1,7 @@
 import React from 'react'
 import checkoutCheese from './checkoutCheese'
+import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 const cart = [
   {
@@ -40,7 +42,7 @@ const cart = [
   }
 ]
 
-export default function checkout() {
+export function checkout() {
   return (
     <div className="checkout">
       <h2>Checkout</h2>
@@ -57,8 +59,15 @@ export default function checkout() {
           />
         ))}
       </div>
-
-      <button>Proceed to Checkout</button>
+      <div className="totalAmount" />
+      <Link to="/checkout">
+        <button type="button">Proceed to Checkout</button>
+      </Link>
     </div>
   )
 }
+const mapState = () => {}
+
+const mapDispatch = () => {}
+
+export default connect(mapState, mapDispatch)(checkout)
