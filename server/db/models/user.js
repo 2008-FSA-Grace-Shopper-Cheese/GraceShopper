@@ -27,11 +27,7 @@ const User = db.define('user', {
   googleId: {
     type: Sequelize.STRING
   },
-  userName: {
-    type: Sequelize.STRING
-    // unique: true,
-    // allowNull: false
-  },
+
   address: {
     type: Sequelize.TEXT,
     defaultValue: '123 Seasame Street'
