@@ -1,5 +1,5 @@
 import React from 'react'
-import checkoutCheese from './checkoutCheese'
+import cartCheese from './cartCheese'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
@@ -42,14 +42,14 @@ const cart = [
   }
 ]
 
-export function checkout() {
+export function shoppingCart() {
   return (
-    <div className="checkout">
-      <h2>Checkout</h2>
+    <div className="shoppingCart">
+      <h2>Shopping Cart</h2>
       {/* <div>item 1</div> */}
       <div>
         {cart.map(cheese => (
-          <checkoutCheese
+          <cartCheese
             key={cheese.id}
             id={cheese.id}
             name={cheese.name}
@@ -70,4 +70,4 @@ const mapState = () => {}
 
 const mapDispatch = () => {}
 
-export default connect(mapState, mapDispatch)(checkout)
+export default connect(mapState, mapDispatch)(shoppingCart)

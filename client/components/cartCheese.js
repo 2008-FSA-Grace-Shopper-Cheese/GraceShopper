@@ -2,7 +2,7 @@ import {InputLabel} from '@material-ui/core'
 import {MenuItem} from 'material-ui'
 import React, {Component} from 'react'
 
-export default class CheckOoutCheese extends Component {
+export default class cartCheese extends Component {
   constructor() {
     super()
     this.handleChange = this.handleChange.bind(this)
