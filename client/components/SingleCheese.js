@@ -15,7 +15,10 @@ class SingleCheese extends React.Component {
         <img width={500} height={500} src={cheese.imageUrl} />
         <h2>{cheese.name}</h2>
         <p> Description: {cheese.description}</p>
-        <p>Price: {cheese.price}</p>
+        <p>
+          Price:<small>$</small> <strong> {cheese.price}</strong>
+        </p>
+        <button type="button">Add to Cart</button>
       </div>
     )
   }
