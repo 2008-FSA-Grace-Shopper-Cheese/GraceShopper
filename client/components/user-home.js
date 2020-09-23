@@ -6,12 +6,13 @@ import {fetchCheeses} from '../store/cheeses'
 /**
  * COMPONENT
  */
-export class UserHome extends React.Component {
+class UserHome extends React.Component {
   componentDidMount() {
-    this.props.getAllCheeses()
+    this.props.getCheeses()
   }
 
   render() {
+    // console.log("=========>",this.props)
     const cheeses = this.props.allCheeses
     const {userName} = this.props
     var date = new Date()
@@ -28,25 +29,36 @@ export class UserHome extends React.Component {
 
     //easy hash
     let todayPrimeIndex = cheeses.length % ((todayIndex + 1) * 31)
-    let todayPrime = cheeses[todayPrimeIndex]
-
+    let todayPrime = cheeses[0]
+    console.log('this.props', this.props)
+    console.log('cheeses==', cheeses)
+    console.log('todayIndex', todayPrimeIndex)
+    console.log('todayPrime', todayPrime)
     return (
       <div>
-        <h3>Welcome, {userName ? userName : 'Guest'}</h3>
-        <h4>{today}'s Optmize Prime For You:</h4>
-        {todayPrime.imageUrl}
-        {todayPrime.name}
-        {todayPrime.price}
-        {todayPrime.description}
-        <hr />
-        <NavLink to="/cheeses">
-          <h5>See More Cheeses</h5>
-        </NavLink>
+        {cheeses[0] ? (
+          <div>
+            <h3>Welcome, {userName ? userName : 'Guest'}</h3>
+            <h4>{today}'s Optmize Prime For You:</h4>
+            <img width={500} height={500} src={todayPrime.imageUrl} />
+            <h2>{todayPrime.name}</h2>
+            <p> Description: {todayPrime.description}</p>
+            <p>
+              Price:<small>$</small> <strong> {todayPrime.price}</strong>
+            </p>
+
+            <hr />
+            <NavLink to="/cheeses">
+              <h5>See More Cheeses</h5>
+            </NavLink>
+          </div>
+        ) : (
+          <div />
+        )}
       </div>
     )
   }
 }
-
 /**
  * CONTAINER
  */
@@ -54,13 +66,14 @@ const mapState = state => {
   return {
     email: state.user.email,
     userName: state.user.userName,
-    allCheeses: state.cheeses
+    allCheeses: state.cheesesReducer.cheeses
   }
 }
 
 const mapProps = dispatch => {
+  // console.log("dispatch=========>>>>")
   return {
-    getAllCheeses: dispatch(fetchCheeses())
+    getCheeses: () => dispatch(fetchCheeses())
   }
 }
 
