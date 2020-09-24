@@ -1,7 +1,3 @@
-import {InputLabel} from '@material-ui/core'
-import {MenuItem} from 'material-ui'
-import FormControl from '@material-ui/core/FormControl'
-import Select from '@material-ui/core/Select'
 import React, {Component} from 'react'
 
 export default class cartCheese extends Component {
@@ -21,7 +17,12 @@ export default class cartCheese extends Component {
     const {id, name, image, price, quantity} = this.props
     return (
       <div className="item_in_Checkout">
-        <img className="checkoutItem_IMG" src={image} />
+        <img
+          className="checkoutItem_IMG"
+          height={100}
+          width={100}
+          src={image}
+        />
         <div className="checkoutItem_info">
           <p className="checkoutItem_Name">{name}</p>
           <p className="checkoutItem_Price">
@@ -29,26 +30,21 @@ export default class cartCheese extends Component {
             <strong>{price}</strong>
           </p>
           <div>
-            <FormControl>
-              <InputLabel id="label">Quantity</InputLabel>
-              <Select
-                labelId="label"
-                id="select"
-                value={quantity}
-                onChange={this.handleChange}
-              >
-                <MenuItem value={1}> 1 </MenuItem>
-                <MenuItem value={2}> 2 </MenuItem>
-                <MenuItem value={3}> 3 </MenuItem>
-                <MenuItem value={4}> 4 </MenuItem>
-                <MenuItem value={5}> 5 </MenuItem>
-                <MenuItem value={6}> 6 </MenuItem>
-                <MenuItem value={7}> 7 </MenuItem>
-                <MenuItem value={8}> 8 </MenuItem>
-                <MenuItem value={9}> 9 </MenuItem>
-                <MenuItem value={10}> 10 </MenuItem>
-              </Select>
-            </FormControl>
+            <select name="quantity" onClick={this.onClick}>
+              <option value="{quantity}" selected disabled hidden>
+                {quantity}
+              </option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
           </div>
         </div>
         <button type="button" onClick={this.handleClick}>
