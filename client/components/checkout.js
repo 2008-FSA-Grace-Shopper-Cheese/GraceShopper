@@ -16,7 +16,12 @@ class Checkout extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  componentDidMount() {}
+  componentDidMount() {
+    console.log(this.props.user)
+    this.setState({
+      email: this.props.user.email
+    })
+  }
   handleChange(e) {
     this.setState({
       [e.target.name]: e.target.value
@@ -75,8 +80,14 @@ class Checkout extends React.Component {
   }
 }
 
-const mapState = () => {}
+const mapState = state => {
+  return {
+    user: state.user
+  }
+}
 
-const mapDispatch = () => {}
+const mapDispatch = dispatch => {
+  return {}
+}
 
-export default Checkout
+export default connect(mapState, mapDispatch)(Checkout)
