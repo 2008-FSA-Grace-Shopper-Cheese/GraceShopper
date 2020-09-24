@@ -18,6 +18,17 @@ export const me = () => async dispatch => {
   }
 }
 
+export const obtainUser = email => {
+  return async dispatch => {
+    try {
+      const user = await axios.get(`/api/users/${email}`)
+      dispatch(getUser(user))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
 export const auth = (email, password, method) => async dispatch => {
   let res
   try {

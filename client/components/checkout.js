@@ -5,6 +5,7 @@ class Checkout extends React.Component {
   constructor() {
     super()
     this.state = {
+      email: '',
       address: '',
       phoneNumber: '',
       firstName: '',
@@ -41,6 +42,9 @@ class Checkout extends React.Component {
             name="phoneNumber"
             value={this.state.phoneNumber}
           />
+
+          <label htmlFor="email">Email:</label>
+          <input type="text" name="email" value={this.state.email} />
 
           <label htmlFor="shippingTime">Choose your shipping:</label>
           <select

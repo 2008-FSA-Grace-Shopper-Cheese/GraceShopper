@@ -36,11 +36,11 @@ router.post('/', async (req, res, next) => {
 })
 
 // Gets user info from email, including cart
-router.get('/login', async (req, res, next) => {
+router.get('/userEmail', async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: {
-        email: req.body.email
+        email: req.params.userEmail
       },
       include: {
         model: Cart
