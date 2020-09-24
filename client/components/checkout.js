@@ -10,7 +10,7 @@ class Checkout extends React.Component {
       phoneNumber: '',
       firstName: '',
       lastName: '',
-      shippingTime: 'standard',
+      shippingCost: 'standard',
       creditCard: ''
     }
     this.handleChange = this.handleChange.bind(this)
@@ -51,15 +51,15 @@ class Checkout extends React.Component {
           <label htmlFor="email">Email:</label>
           <input type="text" name="email" value={this.state.email} />
 
-          <label htmlFor="shippingTime">Choose your shipping:</label>
+          <label htmlFor="shippingCost">Choose your shipping:</label>
           <select
-            name="shippingTime"
-            value={this.state.shippingTime}
+            name="shippingCost"
+            value={this.state.shippingCost}
             onChange={this.handleChange}
           >
-            <option value="standard">Standard (5 - 7 days)</option>
-            <option value="express">Express (2 - 3 days)</option>
-            <option value="nextday">Next Day Shipping (1 day)</option>
+            <option value="standard">Standard (5 - 7 days) FREE</option>
+            <option value="express">Express (2 - 3 days) $55</option>
+            <option value="nextday">Next Day Shipping (1 day) $100</option>
           </select>
 
           <label htmlFor="creditCard">Credit Card Number:</label>
