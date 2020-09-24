@@ -35,12 +35,12 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-// Gets user info from email, including cart
-router.get('/userEmail', async (req, res, next) => {
+// Gets user info from email, including cart (remember to add attributes)
+router.get('/:userId', async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: {
-        email: req.params.userEmail
+        id: req.params.userId
       },
       include: {
         model: Cart
