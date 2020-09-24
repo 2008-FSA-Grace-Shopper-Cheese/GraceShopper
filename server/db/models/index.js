@@ -24,6 +24,8 @@ Cart.belongsTo(User)
 
 Cart.belongsToMany(Cheese, {through: 'CheeseCarts'})
 Cheese.belongsToMany(Cart, {through: 'CheeseCarts'})
+Cheese.hasMany(CheeseCart)
+CheeseCart.hasMany(Cheese)
 
 module.exports = {
   User,
