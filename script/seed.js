@@ -58,6 +58,28 @@ async function seed() {
   await rr.addCart(cart)
   await bl.addCart(cart)
 
+  const [ar1, ar2] = await CheeseCart.update(
+    {
+      quantity: 4
+    },
+    {
+      where: {cartId: 1},
+      returning: true, // needed for affectedRows to be populated
+      plain: true // makes sure that the returned instances are just plain objects
+    }
+  )
+
+  const [ar3, ar4] = await CheeseCart.update(
+    {
+      purchasePrice: 199
+    },
+    {
+      where: {cheeseId: 2},
+      returning: true, // needed for affectedRows to be populated
+      plain: true // makes sure that the returned instances are just plain objects
+    }
+  )
+
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }
