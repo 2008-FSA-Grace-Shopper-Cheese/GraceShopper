@@ -22,7 +22,6 @@ router.get('/:id', async (req, res, next) => {
       include: [
         {
           model: Cheese
-          // as: cheeseId
         }
       ]
     })
