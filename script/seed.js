@@ -31,6 +31,7 @@ async function seed() {
       name: 'Parmigiano',
       price: 2899,
       description: `an Italian hard, granular cheese that is produced from cow's milk and has aged 12–36 months.`,
+
       imageUrl:
         'https://www.murrayscheese.com/site/images/items/20017900000.1.jpg?resizeid=9&resizeh=300&resizew=300'
     }),
