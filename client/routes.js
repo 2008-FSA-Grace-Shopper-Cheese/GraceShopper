@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome, AllCheese, SingleCheese} from './components'
 
 import {me} from './store'
-import AboutUs from './components/about-us'
+import {AboutUs} from './components/about-us'
 /**
  * COMPONENT
  */
@@ -32,7 +32,7 @@ class Routes extends Component {
           </Switch>
         )}
         <Route path="/homeGuest" component={UserHome} />
-        {/* <Route path="/aboutus" component={AboutUs} /> */}
+        <Route path="/aboutus" component={AboutUs} />
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>

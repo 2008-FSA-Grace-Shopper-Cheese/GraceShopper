@@ -12,9 +12,8 @@ class UserHome extends React.Component {
   }
 
   render() {
-    // console.log("=========>",this.props)
     const cheeses = this.props.allCheeses
-    const {userName} = this.props
+    const {email, userName} = this.props
     var date = new Date()
     var weekday = new Array(7)
     weekday[0] = 'Sunday'
@@ -28,17 +27,14 @@ class UserHome extends React.Component {
     var today = weekday[todayIndex]
 
     //easy hash
-    let todayPrimeIndex = cheeses.length % ((todayIndex + 1) * 31)
-    let todayPrime = cheeses[0]
-    console.log('this.props', this.props)
-    console.log('cheeses==', cheeses)
-    console.log('todayIndex', todayPrimeIndex)
-    console.log('todayPrime', todayPrime)
+    let todayPrimeIndex = (cheeses.length - 1) % (todayIndex + 1)
+    let todayPrime = cheeses[todayPrimeIndex]
+
     return (
       <div>
         {cheeses[0] ? (
           <div>
-            <h3>Welcome, {userName ? userName : 'Guest'}</h3>
+            <h3>Welcome, {email ? email : 'Guest'}</h3>
             <h4>{today}'s Optmize Prime For You:</h4>
             <img width={500} height={500} src={todayPrime.imageUrl} />
             <h2>{todayPrime.name}</h2>
@@ -71,7 +67,6 @@ const mapState = state => {
 }
 
 const mapProps = dispatch => {
-  // console.log("dispatch=========>>>>")
   return {
     getCheeses: () => dispatch(fetchCheeses())
   }
