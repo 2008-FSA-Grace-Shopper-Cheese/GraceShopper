@@ -2,6 +2,7 @@ import React from 'react'
 import CartCheese from './cartCheese'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {fetchCheeseCart} from '../store/cheeseCart'
 
 const cart = [
   {
@@ -42,32 +43,60 @@ const cart = [
   }
 ]
 
-export function shoppingCart() {
-  return (
-    <div className="shoppingCart">
-      <h2>Shopping Cart</h2>
-      {/* <div>item 1</div> */}
-      <div>
-        {cart.map(cheese => (
-          <CartCheese
-            key={cheese.id}
-            id={cheese.id}
-            name={cheese.name}
-            image={cheese.imageUrl}
-            price={cheese.price}
-            quantity={cheese.quantity}
-          />
-        ))}
-      </div>
-      <div className="totalAmount" />
-      <Link to="/checkout">
-        <button type="button">Proceed to Checkout</button>
-      </Link>
-    </div>
-  )
-}
-const mapState = () => {}
+export class shoppingCart extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      userId: ''
+    }
+  }
 
-const mapDispatch = () => {}
+  componentDidMount() {
+    // console.log("didi mount ===1=>",this.props)
+    this.setState({})
+    this.props.getCheeseCart()
+  }
+
+  render() {
+    //    console.log("===_===2=>",this.props)
+    // if (!this.props.userId) return <p></p>
+    // else
+    return (
+      <div className="shoppingCart">
+        <h2>Shopping Cart</h2>
+        {/* <div>item 1</div> */}
+        <div>
+          {cart.map(cheese => (
+            <CartCheese
+              key={cheese.id}
+              id={cheese.id}
+              name={cheese.name}
+              image={cheese.imageUrl}
+              price={cheese.price}
+              quantity={cheese.quantity}
+            />
+          ))}
+        </div>
+        <div className="totalAmount" />
+        <Link to="/checkout">
+          <button type="button">Proceed to Checkout</button>
+        </Link>
+      </div>
+    )
+  }
+}
+const mapState = state => {
+  return {
+    cheeseCart: state.cheeseCartReducer.cheeseCart
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    getCheeseCart: () => {
+      dispatch(fetchCheeseCart())
+    }
+  }
+}
 
 export default connect(mapState, mapDispatch)(shoppingCart)

@@ -13,7 +13,7 @@ export default class cartCheese extends Component {
     //using reducer remove item from inside the cart state
   }
   render() {
-    console.log('this.props', this)
+    // console.log('this.props', this)
     const {id, name, image, price, quantity} = this.props
     return (
       <div className="item_in_Checkout">

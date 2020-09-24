@@ -15,14 +15,16 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     console.log(req.params.id)
-    const cheeseCart = await CheeseCart.findAll({
+    const cheeseCart = await Cart.findAll({
       where: {
-        cartId: req.params.id
+        userId: req.params.id
       },
-      include: {
-        model: Cheese,
-        as: cheeseId
-      }
+      include: [
+        {
+          model: Cheese
+          // as: cheeseId
+        }
+      ]
     })
     res.json(cheeseCart)
   } catch (error) {
