@@ -8,8 +8,10 @@ const Cheese = db.define('cheese', {
   },
   price: {
     type: Sequelize.INTEGER,
-    allowNull: false
-    //ADD MIN SO PPL DONT BANKRUPT US
+    allowNull: false,
+    validate: {
+      min: 0
+    }
   },
   description: {
     type: Sequelize.TEXT,
@@ -19,8 +21,15 @@ const Cheese = db.define('cheese', {
     type: Sequelize.TEXT,
     allowNull: false,
     defaultValue: 'https://images.heb.com/is/image/HEBGrocery/001199858'
+  },
+  inventory: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 44,
+    validate: {
+      min: 0
+    }
   }
-  //inventory
 })
 
 module.exports = Cheese

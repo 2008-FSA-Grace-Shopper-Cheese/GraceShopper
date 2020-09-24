@@ -1,6 +1,7 @@
 const User = require('./user')
 const Cart = require('./cart')
 const Cheese = require('./cheese')
+const CheeseCart = require('./cheeseCart')
 const db = require('../db')
 // const {Sequelize} = require('sequelize/types')
 
@@ -21,20 +22,12 @@ const db = require('../db')
 User.hasOne(Cart)
 Cart.belongsTo(User)
 
-// const CheeseCart = db.define('CheeseCart', {
-//   quantity: {
-//     type: Sequelize.INTEGER
-//   },
-//   purchasePrice: {
-//     type: Sequelize.INTEGER
-//   }
-// })
-
-Cart.belongsToMany(Cheese, {through: 'CheeseCart'})
-Cheese.belongsToMany(Cart, {through: 'CheeseCart'})
+Cart.belongsToMany(Cheese, {through: 'CheeseCarts'})
+Cheese.belongsToMany(Cart, {through: 'CheeseCarts'})
 
 module.exports = {
   User,
   Cart,
-  Cheese
+  Cheese,
+  CheeseCart
 }
