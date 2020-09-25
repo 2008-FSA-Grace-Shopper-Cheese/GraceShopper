@@ -1,12 +1,10 @@
 import axios from 'axios'
-import store from './index'
 
 const GET_CHEESECART = 'GET_CHEESECART'
 const CHANGE_QUANTITY = 'CHANGE_QUANTITY'
 const DELETE_CHEESE = 'DELETE_CHEESE'
 
 export const getCheeseCart = cheeseCart => {
-  //  console.log('fire')
   return {type: GET_CHEESECART, cheeseCart}
 }
 

@@ -13,7 +13,6 @@ export default class cartCheese extends Component {
     //using reducer remove item from inside the cart state
   }
   render() {
-    // console.log('this.props', this)
     const {id, name, image, price, quantity} = this.props
     return (
       <div className="item_in_Checkout">
@@ -30,10 +29,14 @@ export default class cartCheese extends Component {
             <strong>{price}</strong>
           </p>
           <div>
-            <select name="quantity" onClick={this.onClick}>
-              <option value="{quantity}" selected disabled hidden>
+            <select
+              name="quantity"
+              defaultValue={quantity}
+              onClick={this.onClick}
+            >
+              {/* <option value={quantity} selected disabled hidden>
                 {quantity}
-              </option>
+              </option> */}
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
