@@ -1,4 +1,6 @@
 import React, {Component} from 'react'
+import {deleteCheese, changeQuantity} from '../store/cheeseCart'
+import store from '../store'
 
 export default class cartCheese extends Component {
   constructor() {
@@ -11,6 +13,9 @@ export default class cartCheese extends Component {
   }
   handleClick() {
     //using reducer remove item from inside the cart state
+    console.log('clicked')
+    console.log('this.props.id====', this.props.id)
+    store.dispatch(deleteCheese(this.props.id))
   }
   render() {
     const {id, name, image, price, quantity} = this.props
@@ -57,3 +62,19 @@ export default class cartCheese extends Component {
     )
   }
 }
+
+// const mapDispatch = dispatch => {
+//   return {
+
+// edit: () => {
+//   dispatch(changeQuantity())
+// }  ,
+
+// delete:() => {
+//   dispatch(deleteCheese())
+// }
+
+//   }
+// }
+
+// export default connect(mapDispatch)(cartCheese)

@@ -1,9 +1,12 @@
 import axios from 'axios'
 
+// action type
+
 const GET_CHEESECART = 'GET_CHEESECART'
 const CHANGE_QUANTITY = 'CHANGE_QUANTITY'
 const DELETE_CHEESE = 'DELETE_CHEESE'
 
+//action creater
 export const getCheeseCart = cheeseCart => {
   return {type: GET_CHEESECART, cheeseCart}
 }
@@ -22,15 +25,18 @@ export const fetchCheeseCart = () => async dispatch => {
 
 // export const deletedCheese = (cheeseId)=>{
 //     return {
-//         type:DELETE_CHEESE
+//         type:DELETE_CHEESE,
+//      cheeseId
 //     }
 // }
 
 export const deleteCheese = cheeseId => async dispatch => {
   try {
+    console.log('cheeseId is ==-', cheeseId)
+    console.log('deletedcheese worked here')
     const res = await axios.get('/auth/me')
     const id = res.data.id
-    await axios.delete(`/api/cheeseCart/${id}`, {cheeseId})
+    await axios.delete(`/api/cheeseCart/${id}/${cheeseId}`)
     const {data: cheeseCart} = await axios.get(`/api/cheeseCart/${id}`)
     dispatch(getCheeseCart(cheeseCart))
   } catch (error) {

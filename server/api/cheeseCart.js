@@ -30,6 +30,27 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+router.get('/:id/:cheeseId', async (req, res, next) => {
+  try {
+    const cheeseCart = await Cart.findOne({
+      where: {
+        userId: req.params.id
+      },
+      include: [
+        {
+          model: Cheese,
+          where: {
+            id: req.params.cheeseId
+          }
+        }
+      ]
+    })
+    res.json(cheeseCart)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.put('/:id', async (req, res, next) => {
   try {
     await CheeseCart.update(
@@ -51,11 +72,13 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id/:cheeseId', async (req, res, next) => {
   try {
+    //   console.log('req.body.cheeseId  backend',req.params.id,req.params.cheeseId)
     await CheeseCart.destroy({
       where: {
-        cheeseId: req.body.cheeseId
+        cartId: req.params.id,
+        cheeseId: req.params.cheeseId
       }
     })
   } catch (error) {
