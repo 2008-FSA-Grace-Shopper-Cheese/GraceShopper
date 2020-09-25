@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Cart, Cheese} = require('../server/db/models')
+const {User, Cart, Cheese, CheeseCart} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -20,11 +20,6 @@ async function seed() {
     }),
     User.create({email: 'ericdag@sina.com', password: '123', userName: 'elmo'})
   ])
-  const [robot, bigbird, elmo] = users
-
-  const cart = await Cart.create({items: [{}, {}]})
-
-  await robot.setCart(cart)
 
   const cheeses = await Promise.all([
     Cheese.create({
@@ -50,6 +45,40 @@ async function seed() {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Burrata2.jpg/1200px-Burrata2.jpg'
     })
   ])
+
+  const [robot, bigbird, elmo] = users
+  const [rr, bl, el] = cheeses
+  const cart = await Cart.create()
+  // const cheeseCart = await CheeseCart.create({
+  //   quantity:4,
+  //   purchasePrice:55
+  // })
+  await robot.setCart(cart)
+
+  await rr.addCart(cart)
+  await bl.addCart(cart)
+
+  const [ar1, ar2] = await CheeseCart.update(
+    {
+      quantity: 4
+    },
+    {
+      where: {cartId: 1},
+      returning: true, // needed for affectedRows to be populated
+      plain: true // makes sure that the returned instances are just plain objects
+    }
+  )
+
+  const [ar3, ar4] = await CheeseCart.update(
+    {
+      purchasePrice: 199
+    },
+    {
+      where: {cheeseId: 2},
+      returning: true, // needed for affectedRows to be populated
+      plain: true // makes sure that the returned instances are just plain objects
+    }
+  )
 
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
