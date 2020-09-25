@@ -12,17 +12,18 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+// This api gets us all cheeses that belongs to a cart by cartId
+router.get('/:cartId', async (req, res, next) => {
   try {
-    console.log(req.params.id)
+    console.log('cartId', req.params.cartId)
     const cheeseCart = await CheeseCart.findAll({
       where: {
-        cartId: req.params.id
-      },
-      include: {
-        model: Cheese,
-        as: cheeseId
+        cartId: req.params.cartId
       }
+      // include: {
+      //   model: Cheese,
+      //   // as: cheeseId
+      // }
     })
     res.json(cheeseCart)
   } catch (error) {
