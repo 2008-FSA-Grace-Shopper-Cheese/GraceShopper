@@ -1,24 +1,17 @@
 import React, {Component} from 'react'
-import {deleteCheese, changeQuantity} from '../store/cheeseCart'
-import store from '../store'
 
 export default class cartCheese extends Component {
-  constructor() {
-    super()
-    this.handleChange = this.handleChange.bind(this)
-    this.handleClick = this.handleClick.bind(this)
-  }
-  handleChange() {
-    // access the store and change the quantity inside the items in cart
-  }
-  handleClick() {
-    //using reducer remove item from inside the cart state
-    console.log('clicked')
-    console.log('this.props.id====', this.props.id)
-    store.dispatch(deleteCheese(this.props.id))
-  }
   render() {
-    const {id, name, image, price, quantity} = this.props
+    const {
+      userId,
+      id,
+      name,
+      image,
+      price,
+      quantity,
+      handleClick,
+      handleChange
+    } = this.props
     return (
       <div className="item_in_Checkout">
         <img
@@ -37,11 +30,8 @@ export default class cartCheese extends Component {
             <select
               name="quantity"
               defaultValue={quantity}
-              onClick={this.onClick}
+              onChange={e => handleChange(e, id)}
             >
-              {/* <option value={quantity} selected disabled hidden>
-                {quantity}
-              </option> */}
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -55,26 +45,15 @@ export default class cartCheese extends Component {
             </select>
           </div>
         </div>
-        <button type="button" onClick={this.handleClick}>
+        <button
+          type="button"
+          onClick={() => {
+            handleClick(id, userId)
+          }}
+        >
           Remove from Cart
         </button>
       </div>
     )
   }
 }
-
-// const mapDispatch = dispatch => {
-//   return {
-
-// edit: () => {
-//   dispatch(changeQuantity())
-// }  ,
-
-// delete:() => {
-//   dispatch(deleteCheese())
-// }
-
-//   }
-// }
-
-// export default connect(mapDispatch)(cartCheese)

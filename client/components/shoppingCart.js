@@ -2,7 +2,11 @@ import React from 'react'
 import CartCheese from './cartCheese'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {fetchCheeseCart} from '../store/cheeseCart'
+import {
+  fetchCheeseCart,
+  deleteCheese,
+  changeQuantity
+} from '../store/cheeseCart'
 
 // const cart = [
 //   {
@@ -45,16 +49,25 @@ import {fetchCheeseCart} from '../store/cheeseCart'
 
 export class shoppingCart extends React.Component {
   componentDidMount() {
-    // console.log("didi mount ===1=>",this.props)
-    this.setState({})
     this.props.getCheeseCart()
+    this.handleChange = this.handleChange.bind(this)
+    this.handleClick = this.handleClick.bind(this)
+  }
+  handleClick(id, userId) {
+    this.props.destroyCheese(id, userId)
+  }
+  handleChange(e, id) {
+    // access the store and change the quantity inside the items in cart
+    this.props.editQuantity(e.target.value, id)
+    console.log('value', e.target.value, 'cheeseId', id)
   }
 
   render() {
-    console.log('>>>>>>>>>', this.props)
     let cart
+    let userId
     if (this.props.cheeseCart[0]) {
       cart = this.props.cheeseCart[0].cheeses
+      userId = this.props.cheeseCart[0].id
     }
     return (
       <div>
@@ -66,11 +79,14 @@ export class shoppingCart extends React.Component {
               {cart.map(cheese => (
                 <CartCheese
                   key={cheese.id}
+                  userId={userId}
                   id={cheese.id}
                   name={cheese.name}
                   image={cheese.imageUrl}
                   price={cheese.price}
                   quantity={cheese.CheeseCarts.quantity}
+                  handleChange={this.handleChange}
+                  handleClick={this.handleClick}
                 />
               ))}
             </div>
@@ -87,6 +103,7 @@ export class shoppingCart extends React.Component {
   }
 }
 const mapState = state => {
+  console.log('mapstate is running', state)
   return {
     cheeseCart: state.cheeseCartReducer.cheeseCart
   }
@@ -96,6 +113,12 @@ const mapDispatch = dispatch => {
   return {
     getCheeseCart: () => {
       dispatch(fetchCheeseCart())
+    },
+    destroyCheese: (cheeseId, userId) => {
+      dispatch(deleteCheese(cheeseId, userId))
+    },
+    editQuantity: (qty, cheeseId) => {
+      dispatch(changeQuantity(qty, cheeseId))
     }
   }
 }

@@ -81,6 +81,7 @@ router.delete('/:id/:cheeseId', async (req, res, next) => {
         cheeseId: req.params.cheeseId
       }
     })
+    res.json('deleted')
   } catch (error) {
     next(error)
   }
