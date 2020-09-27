@@ -62,8 +62,8 @@ router.put('/:id', async (req, res, next) => {
           cartId: req.params.id,
           cheeseId: req.body.cheeseId
         },
-        returning: true, // needed for affectedRows to be populated
-        plain: true // makes sure that the returned instances are just plain objects
+        returning: true,
+        plain: true
       }
     )
     res.json('OK')
@@ -89,7 +89,6 @@ router.post('/:cartId/:cheeseId', async (req, res, next) => {
 
 router.delete('/:id/:cheeseId', async (req, res, next) => {
   try {
-    //   console.log('req.body.cheeseId  backend',req.params.id,req.params.cheeseId)
     await CheeseCart.destroy({
       where: {
         cartId: req.params.id,
