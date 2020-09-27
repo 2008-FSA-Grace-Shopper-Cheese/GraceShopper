@@ -11,15 +11,16 @@ class Checkout extends React.Component {
       firstName: '',
       lastName: '',
       shippingCost: 'standard',
-      creditCard: ''
+      creditCard: '',
+      loading: true
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidMount() {
-    console.log(this.props.user)
     this.setState({
-      email: this.props.user.email
+      email: this.props.user.email,
+      loading: false
     })
   }
   handleChange(e) {
@@ -29,52 +30,83 @@ class Checkout extends React.Component {
   }
   handleSubmit(e) {}
   render() {
+    console.log(this.state)
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="firstName">First Name:</label>
-          <input type="text" name="firstName" value={this.state.firstName} />
+        {!this.state.loading ? (
+          <div>
+            <form onSubmit={this.handleSubmit}>
+              <label htmlFor="firstName">First Name:</label>
+              <input
+                type="text"
+                name="firstName"
+                value={this.state.firstName}
+                onChange={this.handleChange}
+              />
 
-          <label htmlFor="lastName">Last Name:</label>
-          <input type="text" name="lastName" value={this.state.lastName} />
+              <label htmlFor="lastName">Last Name:</label>
+              <input
+                type="text"
+                name="lastName"
+                value={this.state.lastName}
+                onChange={this.handleChange}
+              />
 
-          <label htmlFor="address">Address:</label>
-          <input type="text" name="address" value={this.state.address} />
+              <label htmlFor="address">Address:</label>
+              <input
+                type="text"
+                name="address"
+                value={this.state.address}
+                onChange={this.handleChange}
+              />
 
-          <label htmlFor="phoneNumber">Phone:</label>
-          <input
-            type="text"
-            name="phoneNumber"
-            value={this.state.phoneNumber}
-          />
+              <label htmlFor="phoneNumber">Phone:</label>
+              <input
+                type="text"
+                name="phoneNumber"
+                value={this.state.phoneNumber}
+                onChange={this.handleChange}
+              />
 
-          <label htmlFor="email">Email:</label>
-          <input type="text" name="email" value={this.state.email} />
+              <label htmlFor="email">Email:</label>
+              <input
+                type="text"
+                name="email"
+                value={this.state.email}
+                onChange={this.handleChange}
+              />
 
-          <label htmlFor="shippingCost">Choose your shipping:</label>
-          <select
-            name="shippingCost"
-            value={this.state.shippingCost}
-            onChange={this.handleChange}
-          >
-            <option value="standard">Standard (5 - 7 days) FREE</option>
-            <option value="express">Express (2 - 3 days) $55</option>
-            <option value="nextday">Next Day Shipping (1 day) $100</option>
-          </select>
+              <label htmlFor="shippingCost">Choose your shipping:</label>
+              <select
+                name="shippingCost"
+                value={this.state.shippingCost}
+                onChange={this.handleChange}
+              >
+                <option value="standard">Standard (5 - 7 days) FREE</option>
+                <option value="express">Express (2 - 3 days) $55</option>
+                <option value="nextday">Next Day Shipping (1 day) $100</option>
+              </select>
 
-          <label htmlFor="creditCard">Credit Card Number:</label>
-          <input type="text" name="creditCard" value={this.state.creditCard} />
+              <label htmlFor="creditCard">Credit Card Number:</label>
+              <input
+                type="text"
+                name="creditCard"
+                value={this.state.creditCard}
+                onChange={this.handleChange}
+              />
 
-          <button type="submit">Review Order</button>
-        </form>
+              <button type="submit">Review Order</button>
+            </form>
 
-        <div>
-          <h2>Order Summary</h2>
-          <div>Items: </div>
-          <div>Shipping: </div>
-          <div>Estimated tax to be collected: </div>
-          <h2>Total: </h2>
-        </div>
+            <div>
+              <h2>Order Summary</h2>
+              <div>Items: </div>
+              <div>Shipping: </div>
+              <div>Estimated tax to be collected: </div>
+              <h2>Total: </h2>
+            </div>
+          </div>
+        ) : null}
       </div>
     )
   }
