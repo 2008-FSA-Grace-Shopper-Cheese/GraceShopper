@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 export default class cartCheese extends Component {
   render() {
@@ -56,4 +57,10 @@ export default class cartCheese extends Component {
       </div>
     )
   }
+}
+cartCheese.propTypes = {
+  name: PropTypes.string,
+  id: PropTypes.string,
+  price: PropTypes.string,
+  quantity: PropTypes.string
 }
