@@ -72,6 +72,21 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
+router.post('/:cartId/:cheeseId', async (req, res, next) => {
+  console.log(req.params.cheeseId)
+  try {
+    const cart = await Cart.findByPk(req.params.cartId)
+
+    const cheese = await Cheese.findByPk(req.params.cheeseId)
+
+    await cheese.addCart(cart)
+
+    res.json('OK')
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.delete('/:id/:cheeseId', async (req, res, next) => {
   try {
     //   console.log('req.body.cheeseId  backend',req.params.id,req.params.cheeseId)
