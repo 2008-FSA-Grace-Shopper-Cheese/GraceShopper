@@ -72,14 +72,43 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/:cartId/:cheeseId', async (req, res, next) => {
+router.post('/:id/:cheeseId', async (req, res, next) => {
   console.log(req.params.cheeseId)
   try {
-    const cart = await Cart.findByPk(req.params.cartId)
+    const arr = await Cart.findOrCreate({
+      where: {completed: 'false', userId: req.params.id}
+    })
+    const cart = arr[0] // the first element is the instance
+    const wasCreated = arr[1] // the second element tells us if the
 
     const cheese = await Cheese.findByPk(req.params.cheeseId)
 
     await cheese.addCart(cart)
+    console.log('******', wasCreated)
+
+    let qty
+    console.log('1111', cart.id)
+    console.log('2222', req.params.cheeseId)
+    const cheeseCartInstance = await CheeseCart.findOne({
+      where: {
+        cartId: cart.id,
+        cheeseId: req.params.cheeseId
+      }
+    })
+    console.log(cheeseCartInstance.quantity)
+    qty = cheeseCartInstance.quantity
+
+    await CheeseCart.update(
+      {
+        quantity: ++qty
+      },
+      {
+        where: {
+          cartId: cart.id,
+          cheeseId: req.params.cheeseId
+        }
+      }
+    )
 
     res.json('OK')
   } catch (error) {

@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchCheeses} from '../store/cheeses'
 import axios from 'axios'
-
+import {fetchCheeseCart} from '../store/cheeseCart'
 class AllCheese extends React.Component {
   constructor() {
     super()
@@ -14,7 +14,7 @@ class AllCheese extends React.Component {
   }
   handleClick(e) {
     let cheeseId = e.target.value
-    this.props.addToCart(cheeseId, 1)
+    this.props.addToCart(cheeseId)
   }
 
   render() {
@@ -56,8 +56,16 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     getCheeses: () => dispatch(fetchCheeses()),
-    addToCart: async (cheeseId, cartId) => {
-      await axios.post(`/api/cheeseCart/${cartId}/${cheeseId}`)
+    addToCart: async cheeseId => {
+      const res = await axios.get('/auth/me')
+      const id = res.data.id
+      console.log('now id is', id)
+      if (!id) {
+        sessionStorage.guestCart = {cheese1: 222}
+      }
+      console.log('sessionStorage.guestCart is', sessionStorage.guestCart)
+      await axios.post(`/api/cheeseCart/${id}/${cheeseId}`)
+      dispatch(fetchCheeseCart())
     }
   }
 }
