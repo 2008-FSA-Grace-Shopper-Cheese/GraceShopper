@@ -32,7 +32,6 @@ class AllCheese extends React.Component {
         cheese => cheese.id === Number(cheeseId)
       )
       selectedCheese[0].quantity = 1
-      console.log('current selected Cheese', selectedCheese[0])
 
       if (localStorage.getItem('cheese')) {
         localCart = JSON.parse(localStorage.getItem('cheese'))

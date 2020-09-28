@@ -45,12 +45,7 @@ export default class cartCheese extends Component {
             </select>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={() => {
-            handleClick(id, userId)
-          }}
-        >
+        <button type="button" value={id} onClick={handleClick}>
           Remove from Cart
         </button>
       </div>

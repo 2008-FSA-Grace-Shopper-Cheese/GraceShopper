@@ -9,24 +9,39 @@ import {
 } from '../store/cheeseCart'
 
 export class shoppingCart extends React.Component {
-  componentDidMount() {
-    this.props.getCheeseCart()
+  constructor() {
+    super()
+    this.state = {
+      rerender: true
+    }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
   }
-  handleClick(id) {
-    this.props.destroyCheese(id)
+  componentDidMount() {
+    this.props.getCheeseCart()
+  }
+  handleClick(e) {
+    let CheeseId = e.target.value
+    if (this.props.user.id) {
+      this.props.destroyCheese(CheeseId)
+    } else {
+      let storageProducts = JSON.parse(localStorage.getItem('cheese'))
+      let products = storageProducts.filter(
+        cheese => cheese.id !== Number(CheeseId)
+      )
+      localStorage.setItem('cheese', JSON.stringify(products))
+      this.setState({rerender: !this.state.rerender})
+    }
   }
   handleChange(e, id) {
-    this.props.editQuantity(e.target.value, id)
-    console.log('value', e.target.value, 'cheeseId', id)
+    if (this.props.user.id) {
+      this.props.editQuantity(e.target.value, id)
+    }
   }
 
   render() {
     let cart
     let userId
-    let quantity
-
     if (this.props.cheeseCart[0]) {
       cart = this.props.cheeseCart[0].cheeses
       userId = this.props.user.id
