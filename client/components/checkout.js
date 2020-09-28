@@ -1,7 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {updateUser} from '../store/user'
-import {fetchCheeseCart, submitShippingCost} from '../store/cheeseCart'
+import {
+  fetchCheeseCart,
+  submitShippingCost,
+  checkoutComplete
+} from '../store/cheeseCart'
 
 const shippingObj = {
   '1000': 'Standard',
@@ -47,6 +51,9 @@ class Checkout extends React.Component {
     const shippingCost = Number(this.state.shippingCost)
 
     this.props.submitShippingCost(this.props.cheeseCart[0].id, shippingCost)
+    this.props.checkoutComplete(
+      this.props.cheeseCart[0].cheeses[0].CheeseCarts.cartId
+    )
     this.props.history.push('/fulfillment')
   }
   render() {
@@ -164,7 +171,8 @@ const mapDispatch = dispatch => {
     getCheeseCart: () => dispatch(fetchCheeseCart()),
     submitShippingCost: (cheeseCartId, shippingCost) => {
       dispatch(submitShippingCost(cheeseCartId, shippingCost))
-    }
+    },
+    checkoutComplete: cartId => dispatch(checkoutComplete(cartId))
   }
 }
 

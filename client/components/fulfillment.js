@@ -4,14 +4,21 @@ import {connect} from 'react-redux'
 class Fulfillment extends React.Component {
   constructor() {
     super()
+    this.state = {
+      cart: []
+    }
+  }
+  componentDidMount() {
+    if (this.props.cheeseCart[0].cheeses) {
+      this.setState({
+        cart: this.props.cheeseCart[0].cheeses
+      })
+    }
   }
   render() {
     const randomNum = Math.floor(Math.random() * 100000)
     const user = this.props.user
-    let cart
-    if (this.props.cheeseCart[0]) {
-      cart = this.props.cheeseCart[0].cheeses
-    }
+    const cart = this.state.cart
     return (
       <div>
         <h1>Order #{randomNum}</h1>

@@ -72,6 +72,15 @@ export const submitShippingCost = (
   }
 }
 
+export const checkoutComplete = cartId => async dispatch => {
+  await axios.put(`/api/cart/${cartId}`)
+  try {
+    dispatch(getCheeseCart([]))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const initialState = {
   cheeseCart: [],
   guestCart: []
