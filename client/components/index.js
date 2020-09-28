@@ -10,4 +10,8 @@ export {Login, Signup} from './auth-form'
 export {default as ShoppingCart} from './shoppingCart'
 export {default as AllCheese} from './AllCheese'
 export {default as SingleCheese} from './SingleCheese'
+
+export {default as Checkout} from './checkout'
+
 export {AboutUs} from './about-us.js'
+

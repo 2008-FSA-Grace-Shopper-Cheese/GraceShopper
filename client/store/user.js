@@ -18,6 +18,29 @@ export const me = () => async dispatch => {
   }
 }
 
+export const fetchUser = id => {
+  return async dispatch => {
+    try {
+      const user = await axios.get(`/api/users/${id}`)
+      dispatch(getUser(user))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export const updateUser = (id, newInfo) => {
+  return async dispatch => {
+    try {
+      console.log('run')
+      const user = await axios.put(`/api/users/${id}`, newInfo)
+      dispatch(getUser(user))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
 export const auth = (email, password, method) => async dispatch => {
   let res
   try {

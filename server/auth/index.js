@@ -38,8 +38,12 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/me', (req, res) => {
-  res.json(req.user)
+router.get('/me', (req, res, next) => {
+  try {
+    res.json(req.user)
+  } catch (err) {
+    next(err)
+  }
 })
 
 router.use('/google', require('./google'))
