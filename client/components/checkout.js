@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {updateUser} from '../store/user'
 
 class Checkout extends React.Component {
   constructor() {
@@ -28,9 +29,17 @@ class Checkout extends React.Component {
       [e.target.name]: e.target.value
     })
   }
-  handleSubmit(e) {}
+  handleSubmit(e) {
+    e.preventDefault()
+    const newInfo = {
+      address: this.state.address,
+      phoneNumber: this.state.phoneNumber,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName
+    }
+    this.props.updateUser(this.props.user.id, newInfo)
+  }
   render() {
-    console.log(this.state)
     return (
       <div>
         {!this.state.loading ? (
@@ -72,7 +81,7 @@ class Checkout extends React.Component {
               <input
                 type="text"
                 name="email"
-                value={this.state.email}
+                value={this.props.user.email || this.state.email}
                 onChange={this.handleChange}
               />
 
@@ -119,7 +128,9 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => {
-  return {}
+  return {
+    updateUser: (id, newInfo) => dispatch(updateUser(id, newInfo))
+  }
 }
 
 export default connect(mapState, mapDispatch)(Checkout)

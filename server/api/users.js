@@ -56,14 +56,26 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-// User checkout info, posts to api/users/userId
+// User checkout info, changes to api/users/userId
 router.put('/:userId', async (req, res, next) => {
   try {
-    const {address, phoneNumber} = req.body
-    const updatedUser = await User.update({
-      address,
-      phoneNumber
-    })
+    const {address, phoneNumber, firstName, lastName} = req.body
+    const [numberofUpdated, updatedUser] = await User.update(
+      {
+        address,
+        phoneNumber,
+        firstName,
+        lastName
+      },
+      {
+        where: {
+          id: req.params.userId
+        },
+        returning: true,
+        plain: true
+      }
+    )
+    console.log(updatedUser)
     res.json(updatedUser)
   } catch (err) {
     next(err)
