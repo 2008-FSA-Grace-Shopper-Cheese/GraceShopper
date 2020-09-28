@@ -44,6 +44,7 @@ export const updateUser = (id, newInfo) => {
 export const auth = (email, password, method) => async dispatch => {
   let res
   try {
+    console.log('************', email, password, method)
     res = await axios.post(`/auth/${method}`, {email, password})
   } catch (authError) {
     return dispatch(getUser({error: authError}))
