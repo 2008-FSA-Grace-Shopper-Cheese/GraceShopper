@@ -72,6 +72,10 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     passport.authenticate('google', {
       successRedirect: '/home',
       failureRedirect: '/login'
-    })
+    }),
+    function(req, res) {
+      console.log('test')
+      res.redirect('/home')
+    }
   )
 }
