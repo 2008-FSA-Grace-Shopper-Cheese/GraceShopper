@@ -3,7 +3,6 @@ import React, {Component} from 'react'
 export default class cartCheese extends Component {
   render() {
     const {
-      userId,
       id,
       name,
       image,

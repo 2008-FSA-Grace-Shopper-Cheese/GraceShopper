@@ -14,8 +14,8 @@ export class shoppingCart extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
   }
-  handleClick(id, userId) {
-    this.props.destroyCheese(id, userId)
+  handleClick(id) {
+    this.props.destroyCheese(id)
   }
   handleChange(e, id) {
     this.props.editQuantity(e.target.value, id)
@@ -45,12 +45,11 @@ export class shoppingCart extends React.Component {
               {cart.map(cheese => (
                 <CartCheese
                   key={cheese.id}
-                  userId={userId}
                   id={cheese.id}
                   name={cheese.name}
                   image={cheese.imageUrl}
                   price={cheese.price}
-                  quantity={cheese.CheeseCarts.quantity}
+                  // quantity={cheese.CheeseCarts.quantity}
                   handleChange={this.handleChange}
                   handleClick={this.handleClick}
                 />
