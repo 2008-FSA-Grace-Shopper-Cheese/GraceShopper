@@ -48,7 +48,7 @@ class Checkout extends React.Component {
     this.props.updateUser(this.props.user.id, newInfo)
     const shippingCost = Number(this.state.shippingCost)
 
-    this.props.submitShippingAndTotal(this.props.cheeseCart[0].id, shippingCost)
+    this.props.submitShippingCost(this.props.cheeseCart[0].id, shippingCost)
   }
   render() {
     let cart
