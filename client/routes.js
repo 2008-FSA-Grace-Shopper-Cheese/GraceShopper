@@ -9,9 +9,8 @@ import {
   UserHome,
   AllCheese,
   SingleCheese,
-
+  Fulfillment,
   Checkout,
-
   ShoppingCart,
   AboutUs
 } from './components'
@@ -36,6 +35,7 @@ class Routes extends Component {
         <Route path="/signup" component={Signup} />
 
         <Route path="/checkout" component={Checkout} />
+        <Route path="/fulfillment" component={Fulfillment} />
 
         <Route path="/shoppingCart" component={ShoppingCart} />
 

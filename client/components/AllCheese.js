@@ -36,6 +36,7 @@ class AllCheese extends React.Component {
       if (localStorage.getItem('cheese')) {
         localCart = JSON.parse(localStorage.getItem('cheese'))
       }
+
       if (ItemName(localCart, selectedCheese) >= 0) {
         let num = ItemName(localCart, selectedCheese)
         localCart[num].quantity += 1
@@ -43,7 +44,10 @@ class AllCheese extends React.Component {
         localCart.push(selectedCheese[0])
       }
 
+
       localStorage.setItem('cheese', JSON.stringify(localCart))
+
+      console.log(localStorage)
     } else this.props.addToCart(cheeseId)
   }
 
