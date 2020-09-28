@@ -42,6 +42,7 @@ router.get('/:userId', async (req, res, next) => {
       where: {
         id: req.params.userId
       },
+      attributes: ['firstName', 'lastName', 'email'],
       include: {
         model: Cart
       }
