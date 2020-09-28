@@ -27,6 +27,7 @@ class Checkout extends React.Component {
   }
   componentDidMount() {
     this.props.getCheeseCart()
+    console.log('this.props in check out ===', this.props)
     this.setState({
       email: this.props.user.email,
       loading: false
@@ -51,22 +52,24 @@ class Checkout extends React.Component {
     this.props.submitShippingCost(this.props.cheeseCart[0].id, shippingCost)
   }
   render() {
+    console.log('this.props.user', this.props.user)
     let cart
+    let totalPrice
+    let tax
     if (this.props.cheeseCart[0]) {
       cart = this.props.cheeseCart[0].cheeses
+      totalPrice = this.props.cheeseCart[0].cheeses.reduce(
+        (accumulator, elem) => {
+          return accumulator + elem.price * elem.CheeseCarts.quantity
+        },
+        0
+      )
+      tax = Math.floor(totalPrice * 0.08875)
     }
-
-    const totalPrice = this.props.cheeseCart[0].cheeses.reduce(
-      (accumulator, elem) => {
-        return accumulator + elem.price * elem.CheeseCarts.quantity
-      },
-      0
-    )
-    const tax = Math.floor(totalPrice * 0.08875)
 
     return (
       <div>
-        {!this.state.loading ? (
+        {this.props.cheeseCart[0] ? (
           <div>
             <form onSubmit={this.handleSubmit}>
               <label htmlFor="firstName">First Name:</label>

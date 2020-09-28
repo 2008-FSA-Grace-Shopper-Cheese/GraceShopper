@@ -113,8 +113,8 @@ async function seed() {
   const [robot, bigbird, elmo] = users
   const [rr, bl, el] = cheeses
   const cart = await Cart.create()
-
-  await robot.setCart(cart)
+  //console.log(robot.__proto__)
+  await robot.addCart(cart)
 
   await rr.addCart(cart)
   await bl.addCart(cart)

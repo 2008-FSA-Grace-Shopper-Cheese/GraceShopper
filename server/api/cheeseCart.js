@@ -16,7 +16,8 @@ router.get('/:id', async (req, res, next) => {
   try {
     const cheeseCart = await Cart.findAll({
       where: {
-        userId: req.params.id
+        userId: req.params.id,
+        completed: false
       },
       include: [
         {
@@ -34,7 +35,8 @@ router.get('/:id/:cheeseId', async (req, res, next) => {
   try {
     const cheeseCart = await Cart.findOne({
       where: {
-        userId: req.params.id
+        userId: req.params.id,
+        completed: false
       },
       include: [
         {
@@ -50,9 +52,15 @@ router.get('/:id/:cheeseId', async (req, res, next) => {
     next(error)
   }
 })
-
+// this id is CartId
 router.put('/quantity/:id', async (req, res, next) => {
   try {
+    // const cart = await Cart.findOne({
+    //   where: {completed: 'false', userId: req.params.id},
+    // })
+
+    // const cartId = cart.id
+
     await CheeseCart.update(
       {
         shippingCost: req.body.shippingCost
@@ -71,13 +79,19 @@ router.put('/quantity/:id', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   try {
+    const cart = await Cart.findOne({
+      where: {completed: 'false', userId: req.params.id}
+    })
+
+    const cartId = cart.id
+
     await CheeseCart.update(
       {
         quantity: req.body.qty
       },
       {
         where: {
-          cartId: req.params.id,
+          cartId: cartId,
           cheeseId: req.body.cheeseId
         },
         returning: true,
@@ -136,9 +150,14 @@ router.post('/:id/:cheeseId', async (req, res, next) => {
 
 router.delete('/:id/:cheeseId', async (req, res, next) => {
   try {
+    const cart = await Cart.findOne({
+      where: {completed: 'false', userId: req.params.id}
+    })
+
+    const cartId = cart.id
     await CheeseCart.destroy({
       where: {
-        cartId: req.params.id,
+        cartId: cartId,
         cheeseId: req.params.cheeseId
       }
     })

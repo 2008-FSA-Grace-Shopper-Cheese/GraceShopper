@@ -25,6 +25,7 @@ export const fetchCheeseCart = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
     const id = res.data.id
+    console.log('fresh cart redux==', id)
     const {data: cheeseCart} = await axios.get(`/api/cheeseCart/${id}`)
     dispatch(getCheeseCart(cheeseCart))
   } catch (error) {
