@@ -146,8 +146,8 @@ class Checkout extends React.Component {
                 }, 0)}
               </div>
               <div>Shipping: {shippingObj[this.state.shippingCost]} </div>
-              <div>Estimated tax to be collected: {tax}</div>
-              <h2>Total: {Math.floor((totalPrice + tax) * 100) / 100}</h2>
+              <div>Estimated tax to be collected: $ {tax}</div>
+              <h2>Total: $ {Math.floor((totalPrice + tax) * 100) / 100}</h2>
             </div>
           </div>
         ) : null}
