@@ -106,11 +106,11 @@ router.put('/:id', async (req, res, next) => {
   }
 })
 
-router.post('/:id/:cheeseId', async (req, res, next) => {
-  console.log(req.params.cheeseId)
+router.post('/:cheeseId', async (req, res, next) => {
   try {
+    console.log('userid', req.user.id)
     const arr = await Cart.findOrCreate({
-      where: {completed: 'false', userId: req.params.id}
+      where: {completed: 'false', userId: req.user.id}
     })
     const cart = arr[0] // the first element is the instance
     const wasCreated = arr[1] // the second element tells us if the

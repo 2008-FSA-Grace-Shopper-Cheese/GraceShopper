@@ -21,7 +21,12 @@ class AllCheese extends React.Component {
       let selectedCheese = this.props.cheeses.filter(
         cheese => cheese.id === Number(cheeseId)
       )
+      if (localStorage.getItem('cheese')) {
+        localCart = JSON.parse(localStorage.getItem('cheese'))
+      }
       localCart.push(selectedCheese[0])
+      console.log('local', localCart)
+
       localStorage.setItem('cheese', JSON.stringify(localCart))
       console.log('allcheese after local storage', localStorage)
     } else this.props.addToCart(cheeseId)
@@ -73,7 +78,7 @@ const mapDispatch = dispatch => {
   return {
     getCheeses: () => dispatch(fetchCheeses()),
     addToCart: async cheeseId => {
-      await axios.post(`/api/cheeseCart/${id}/${cheeseId}`)
+      await axios.post(`/api/cheeseCart/${cheeseId}`)
       dispatch(fetchCheeseCart())
     }
   }
