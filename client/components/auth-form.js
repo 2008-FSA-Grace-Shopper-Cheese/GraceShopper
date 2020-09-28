@@ -34,7 +34,7 @@ const AuthForm = props => {
       <div>
         <NavLink to="/homeGuest">
           <button onClick={() => guestSigh()} type="submit">
-            As A Guast
+            As A Guest
           </button>
         </NavLink>
       </div>
