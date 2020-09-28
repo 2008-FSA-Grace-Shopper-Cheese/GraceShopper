@@ -59,11 +59,11 @@ const mapDispatch = dispatch => {
     addToCart: async cheeseId => {
       const res = await axios.get('/auth/me')
       const id = res.data.id
-      console.log('now id is', id)
-      if (!id) {
-        sessionStorage.guestCart = {cheese1: 222}
-      }
-      console.log('sessionStorage.guestCart is', sessionStorage.guestCart)
+//       console.log('now id is', id)
+//       if (!id) {
+//         sessionStorage.guestCart = {cheese1: 222}
+//       }
+//       console.log('sessionStorage.guestCart is', sessionStorage.guestCart)
       await axios.post(`/api/cheeseCart/${id}/${cheeseId}`)
       dispatch(fetchCheeseCart())
     }
