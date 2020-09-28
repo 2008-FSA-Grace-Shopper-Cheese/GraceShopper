@@ -1,7 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {updateUser} from '../store/user'
-import {fetchCheeseCart, submitShippingCost} from '../store/cheeseCart'
+import {
+  fetchCheeseCart,
+  submitShippingCost,
+  checkoutComplete
+} from '../store/cheeseCart'
 
 const shippingObj = {
   '1000': 'Standard',
@@ -19,18 +23,15 @@ class Checkout extends React.Component {
       firstName: '',
       lastName: '',
       shippingCost: '1000',
-      creditCard: '',
-      loading: true
+      creditCard: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidMount() {
     this.props.getCheeseCart()
-    console.log('this.props in check out ===', this.props)
     this.setState({
-      email: this.props.user.email,
-      loading: false
+      email: this.props.user.email
     })
   }
   handleChange(e) {
@@ -50,9 +51,12 @@ class Checkout extends React.Component {
     const shippingCost = Number(this.state.shippingCost)
 
     this.props.submitShippingCost(this.props.cheeseCart[0].id, shippingCost)
+    this.props.checkoutComplete(
+      this.props.cheeseCart[0].cheeses[0].CheeseCarts.cartId
+    )
+    this.props.history.push('/fulfillment')
   }
   render() {
-    console.log('this.props.user', this.props.user)
     let cart
     let totalPrice
     let tax
@@ -167,7 +171,8 @@ const mapDispatch = dispatch => {
     getCheeseCart: () => dispatch(fetchCheeseCart()),
     submitShippingCost: (cheeseCartId, shippingCost) => {
       dispatch(submitShippingCost(cheeseCartId, shippingCost))
-    }
+    },
+    checkoutComplete: cartId => dispatch(checkoutComplete(cartId))
   }
 }
 
