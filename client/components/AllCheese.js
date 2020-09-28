@@ -25,8 +25,6 @@ class AllCheese extends React.Component {
       if (localStorage.getItem('cheese')) {
         localCart = JSON.parse(localStorage.getItem('cheese'))
       }
-      console.log('this is the local Cart', localCart)
-      console.log('this is the current selected Cheese', selectedCheese)
 
       localCart.push(selectedCheese[0])
 
