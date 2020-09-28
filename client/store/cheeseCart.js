@@ -54,6 +54,23 @@ export const changeQuantity = (qty, cheeseId) => async dispatch => {
   }
 }
 
+export const submitShippingCost = (
+  cheeseCartId,
+  shippingCost
+) => async dispatch => {
+  try {
+    await axios.put(`/api/cheeseCart/quantity/${cheeseCartId}`, {shippingCost})
+
+    const {data: cheeseCart} = await axios.get(
+      `/api/cheeseCart/${cheeseCartId}`
+    )
+
+    dispatch(getCheeseCart(cheeseCart))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const initialState = {
   cheeseCart: [],
   guestCart: []
