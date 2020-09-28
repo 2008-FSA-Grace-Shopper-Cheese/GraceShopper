@@ -49,7 +49,11 @@ export class shoppingCart extends React.Component {
                   name={cheese.name}
                   image={cheese.imageUrl}
                   price={cheese.price}
-                  // quantity={cheese.CheeseCarts.quantity}
+                  quantity={
+                    cheese.CheeseCarts
+                      ? cheese.CheeseCarts.quantity
+                      : cheese.quantity
+                  }
                   handleChange={this.handleChange}
                   handleClick={this.handleClick}
                 />
