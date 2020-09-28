@@ -2,9 +2,7 @@ const passport = require('passport')
 const router = require('express').Router()
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const {User} = require('../db/models')
-const {clientID, clientSecret, callback} = require('../../secrets')
 module.exports = router
-
 /**
  * For OAuth keys and other secrets, your Node process will search
  * process.env to find environment variables. On your production server,
@@ -18,16 +16,14 @@ module.exports = router
  * process.env.GOOGLE_CLIENT_SECRET = 'your google client secret'
  * process.env.GOOGLE_CALLBACK = '/your/google/callback'
  */
-
-if (!clientID || !clientSecret) {
+if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   console.log('Google client ID / secret not found. Skipping Google OAuth.')
 } else {
   const googleConfig = {
-    clientID: clientID,
-    clientSecret: clientSecret,
-    callbackURL: callback
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: process.env.GOOGLE_CALLBACK
   }
-
   const strategy = new GoogleStrategy(
     googleConfig,
     (token, refreshToken, profile, done) => {
@@ -37,7 +33,6 @@ if (!clientID || !clientSecret) {
       const firstName = profile.name.givenName
       const lastName = profile.name.familyName
       const fullName = profile.displayName
-
       User.findOrCreate({
         where: {googleId},
         defaults: {email, imgUrl, firstName, lastName, fullName}
@@ -46,13 +41,31 @@ if (!clientID || !clientSecret) {
         .catch(done)
     }
   )
-
   passport.use(strategy)
-
   router.get(
     '/',
     passport.authenticate('google', {scope: ['email', 'profile']})
   )
+  //  GOOGLE MIDDLEWARE ONE WAY
+  // router.get(
+  //   '/callback',
+  //   passport.authenticate('google', {
+  //     successRedirect: '/home',
+  //     failureRedirect: '/login'
+  //   })
+  // )
+  //  GOOGLE MIDDLEWARE REFACTORED
+  //   router.get(
+  //     '/callback',
+  //     passport.authenticate('google', {
+  //          successRedirect: '/home',
+  //          failureRedirect: '/login'
+  //          }),
+  //     function (req, res) {
+  //       console.log('test')
+  //       res.redirect('/home')
+  //     }
+  //   )
 
   router.get(
     '/callback',
