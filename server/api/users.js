@@ -76,7 +76,6 @@ router.put('/:userId', async (req, res, next) => {
         plain: true
       }
     )
-    console.log(updatedUser)
     res.json(updatedUser)
   } catch (err) {
     next(err)
