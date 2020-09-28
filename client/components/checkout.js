@@ -4,7 +4,10 @@ import {updateUser} from '../store/user'
 import {
   fetchCheeseCart,
   submitShippingCost,
+
+
   checkoutComplete
+
 } from '../store/cheeseCart'
 
 const shippingObj = {
@@ -51,10 +54,12 @@ class Checkout extends React.Component {
     const shippingCost = Number(this.state.shippingCost)
 
     this.props.submitShippingCost(this.props.cheeseCart[0].id, shippingCost)
+
     this.props.checkoutComplete(
       this.props.cheeseCart[0].cheeses[0].CheeseCarts.cartId
     )
     this.props.history.push('/fulfillment')
+
   }
   render() {
     let cart
@@ -62,13 +67,12 @@ class Checkout extends React.Component {
     let tax
     if (this.props.cheeseCart[0]) {
       cart = this.props.cheeseCart[0].cheeses
-      totalPrice = this.props.cheeseCart[0].cheeses.reduce(
-        (accumulator, elem) => {
+      totalPrice =
+        this.props.cheeseCart[0].cheeses.reduce((accumulator, elem) => {
           return accumulator + elem.price * elem.CheeseCarts.quantity
-        },
-        0
-      )
-      tax = Math.floor(totalPrice * 0.08875)
+        }, 0) / 100
+
+      tax = Math.floor(totalPrice * 0.08875) / 100
     }
 
     return (
@@ -148,8 +152,8 @@ class Checkout extends React.Component {
                 }, 0)}
               </div>
               <div>Shipping: {shippingObj[this.state.shippingCost]} </div>
-              <div>Estimated tax to be collected: {tax}</div>
-              <h2>Total: {totalPrice + tax}</h2>
+              <div>Estimated tax to be collected: $ {tax}</div>
+              <h2>Total: $ {Math.floor((totalPrice + tax) * 100) / 100}</h2>
             </div>
           </div>
         ) : null}
@@ -172,7 +176,9 @@ const mapDispatch = dispatch => {
     submitShippingCost: (cheeseCartId, shippingCost) => {
       dispatch(submitShippingCost(cheeseCartId, shippingCost))
     },
+
     checkoutComplete: cartId => dispatch(checkoutComplete(cartId))
+
   }
 }
 
