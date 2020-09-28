@@ -12,6 +12,7 @@ export default class cartCheese extends Component {
       handleClick,
       handleChange
     } = this.props
+    console.log('this is the quantity', quantity)
     return (
       <div className="item_in_Checkout">
         <img
@@ -29,7 +30,7 @@ export default class cartCheese extends Component {
           <div>
             <select
               name="quantity"
-              defaultValue={2}
+              defaultValue={quantity}
               onChange={e => handleChange(e, id)}
             >
               <option value="1">1</option>
@@ -45,12 +46,7 @@ export default class cartCheese extends Component {
             </select>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={() => {
-            handleClick(id, userId)
-          }}
-        >
+        <button type="button" value={id} onClick={handleClick}>
           Remove from Cart
         </button>
       </div>

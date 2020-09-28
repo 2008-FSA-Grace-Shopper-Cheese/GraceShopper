@@ -5,6 +5,16 @@ import {fetchCheeses} from '../store/cheeses'
 import axios from 'axios'
 import {fetchCheeseCart} from '../store/cheeseCart'
 
+function ItemName(arr1, arr2) {
+  for (let i = 0; i < arr1.length; ++i) {
+    let currentEle = arr1[i]
+    if (currentEle.name === arr2[0].name) {
+      return i
+    }
+  }
+  return -1
+}
+
 class AllCheese extends React.Component {
   constructor() {
     super()
@@ -22,17 +32,18 @@ class AllCheese extends React.Component {
         cheese => cheese.id === Number(cheeseId)
       )
       selectedCheese[0].quantity = 1
+
       if (localStorage.getItem('cheese')) {
         localCart = JSON.parse(localStorage.getItem('cheese'))
       }
-      let checkInCart = localCart.filter(
-        cheese => cheese.id === Number(cheeseId)
-      )
-      if (checkInCart[0]) {
-        let updatedQty = localCart.map(cheese => {})
+
+      if (ItemName(localCart, selectedCheese) >= 0) {
+        let num = ItemName(localCart, selectedCheese)
+        localCart[num].quantity += 1
+      } else {
+        localCart.push(selectedCheese[0])
       }
 
-      localCart.push(selectedCheese[0])
 
       localStorage.setItem('cheese', JSON.stringify(localCart))
 
