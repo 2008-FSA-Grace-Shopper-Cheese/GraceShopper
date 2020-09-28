@@ -8,6 +8,15 @@ import {
   changeQuantity
 } from '../store/cheeseCart'
 
+function GetIndexOfCheese(array, id) {
+  for (let i = 0; i < array.length; ++i) {
+    let currentEle = array[i]
+    if (currentEle.id === id) {
+      return [i]
+    }
+  }
+}
+
 export class shoppingCart extends React.Component {
   constructor() {
     super()
@@ -34,8 +43,23 @@ export class shoppingCart extends React.Component {
     }
   }
   handleChange(e, id) {
+    let newQuantity = e.target.value
     if (this.props.user.id) {
       this.props.editQuantity(e.target.value, id)
+    } else {
+      let storageProducts = JSON.parse(localStorage.getItem('cheese'))
+      let num = Number(id)
+      // for(let i = 0; i < storageProducts.length; ++i){
+      //   let currentEle = storageProducts[i]
+      //   if(currentEle.id === Number(newQuantity)){
+      //     currentEle.quantity = newQuantity
+      //   }
+      // }
+      let index = GetIndexOfCheese(storageProducts, num)
+      storageProducts[index].quantity = Number(newQuantity)
+      localStorage.setItem('cheese', JSON.stringify(storageProducts))
+
+      this.setState({rerender: !this.state.rerender})
     }
   }
 
@@ -47,10 +71,8 @@ export class shoppingCart extends React.Component {
       userId = this.props.user.id
     } else {
       cart = JSON.parse(localStorage.getItem('cheese'))
-      console.log('cart for guest', cart)
     }
 
-    console.log('>>>', this.props)
     return (
       <div>
         {cart ? (
