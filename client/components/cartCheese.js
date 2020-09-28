@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 export default class cartCheese extends Component {
   render() {
     const {
-      userId,
       id,
       name,
       image,
@@ -30,7 +29,7 @@ export default class cartCheese extends Component {
           <div>
             <select
               name="quantity"
-              defaultValue={quantity}
+              defaultValue={2}
               onChange={e => handleChange(e, id)}
             >
               <option value="1">1</option>

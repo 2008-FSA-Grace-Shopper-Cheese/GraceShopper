@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {fetchCheeses} from '../store/cheeses'
 import axios from 'axios'
 import {fetchCheeseCart} from '../store/cheeseCart'
+
 class AllCheese extends React.Component {
   constructor() {
     super()
@@ -13,8 +14,30 @@ class AllCheese extends React.Component {
     this.props.getCheeses()
   }
   handleClick(e) {
+    let localCart = []
     let cheeseId = e.target.value
-    this.props.addToCart(cheeseId)
+
+    if (!this.props.user.id) {
+      let selectedCheese = this.props.cheeses.filter(
+        cheese => cheese.id === Number(cheeseId)
+      )
+      selectedCheese[0].quantity = 1
+      if (localStorage.getItem('cheese')) {
+        localCart = JSON.parse(localStorage.getItem('cheese'))
+      }
+      let checkInCart = localCart.filter(
+        cheese => cheese.id === Number(cheeseId)
+      )
+      if (checkInCart[0]) {
+        let updatedQty = localCart.map(cheese => {})
+      }
+
+      localCart.push(selectedCheese[0])
+
+      localStorage.setItem('cheese', JSON.stringify(localCart))
+
+      console.log(localStorage)
+    } else this.props.addToCart(cheeseId)
   }
 
   render() {
@@ -50,21 +73,17 @@ class AllCheese extends React.Component {
 }
 
 const mapState = state => {
-  return {cheeses: state.cheesesReducer.cheeses}
+  return {
+    cheeses: state.cheesesReducer.cheeses,
+    user: state.user
+  }
 }
 
 const mapDispatch = dispatch => {
   return {
     getCheeses: () => dispatch(fetchCheeses()),
     addToCart: async cheeseId => {
-      const res = await axios.get('/auth/me')
-      const id = res.data.id
-//       console.log('now id is', id)
-//       if (!id) {
-//         sessionStorage.guestCart = {cheese1: 222}
-//       }
-//       console.log('sessionStorage.guestCart is', sessionStorage.guestCart)
-      await axios.post(`/api/cheeseCart/${id}/${cheeseId}`)
+      await axios.post(`/api/cheeseCart/${cheeseId}`)
       dispatch(fetchCheeseCart())
     }
   }
