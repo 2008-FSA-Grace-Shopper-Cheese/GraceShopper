@@ -14,11 +14,11 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.get('/:id', async (req, res, next) => {
+router.get('/userCart', async (req, res, next) => {
   try {
     const cheeseCart = await Cart.findAll({
       where: {
-        userId: req.params.id,
+        userId: req.user.id,
         completed: false
       },
       include: [
@@ -33,11 +33,11 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-router.get('/:id/:cheeseId', async (req, res, next) => {
+router.get('/:cheeseId', async (req, res, next) => {
   try {
     const cheeseCart = await Cart.findOne({
       where: {
-        userId: req.params.id,
+        userId: req.user.id,
         completed: false
       },
       include: [
@@ -79,10 +79,10 @@ router.put('/quantity/:id', async (req, res, next) => {
   }
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/changeQuantity', async (req, res, next) => {
   try {
     const cart = await Cart.findOne({
-      where: {completed: 'false', userId: req.params.id}
+      where: {completed: 'false', userId: req.user.id}
     })
 
     const cartId = cart.id
@@ -108,7 +108,6 @@ router.put('/:id', async (req, res, next) => {
 
 router.post('/:cheeseId', async (req, res, next) => {
   try {
-    console.log('userid', req.user.id)
     const arr = await Cart.findOrCreate({
       where: {completed: 'false', userId: req.user.id}
     })
@@ -118,11 +117,8 @@ router.post('/:cheeseId', async (req, res, next) => {
     const cheese = await Cheese.findByPk(req.params.cheeseId)
 
     await cheese.addCart(cart)
-    console.log('******', wasCreated)
 
     let qty
-    console.log('1111', cart.id)
-    console.log('2222', req.params.cheeseId)
     const cheeseCartInstance = await CheeseCart.findOne({
       where: {
         cartId: cart.id,
@@ -150,10 +146,10 @@ router.post('/:cheeseId', async (req, res, next) => {
   }
 })
 
-router.delete('/:id/:cheeseId', async (req, res, next) => {
+router.delete('/:cheeseId', async (req, res, next) => {
   try {
     const cart = await Cart.findOne({
-      where: {completed: 'false', userId: req.params.id}
+      where: {completed: 'false', userId: req.user.id}
     })
 
     const cartId = cart.id
