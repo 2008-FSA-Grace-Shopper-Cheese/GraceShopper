@@ -35,13 +35,14 @@ router.post('/', async (req, res, next) => {
   }
 })
 
-// Gets user info from email, including cart
-router.get('/login', async (req, res, next) => {
+// Gets user info from email, including cart (remember to add attributes)
+router.get('/:userId', async (req, res, next) => {
   try {
     const user = await User.findOne({
       where: {
-        email: req.body.email
+        id: req.params.userId
       },
+      attributes: ['firstName', 'lastName', 'email'],
       include: {
         model: Cart
       }
@@ -56,14 +57,26 @@ router.get('/login', async (req, res, next) => {
   }
 })
 
-// User checkout info, posts to api/users/userId
+// User checkout info, changes to api/users/userId
 router.put('/:userId', async (req, res, next) => {
   try {
-    const {address, phoneNumber} = req.body
-    const updatedUser = await User.update({
-      address,
-      phoneNumber
-    })
+    const {address, phoneNumber, firstName, lastName} = req.body
+    const [numberofUpdated, updatedUser] = await User.update(
+      {
+        address,
+        phoneNumber,
+        firstName,
+        lastName
+      },
+      {
+        where: {
+          id: req.params.userId
+        },
+        returning: true,
+        plain: true
+      }
+    )
+    console.log(updatedUser)
     res.json(updatedUser)
   } catch (err) {
     next(err)

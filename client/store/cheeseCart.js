@@ -25,6 +25,7 @@ export const fetchCheeseCart = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
     const id = res.data.id
+    console.log('fresh cart redux==', id)
     const {data: cheeseCart} = await axios.get(`/api/cheeseCart/${id}`)
     dispatch(getCheeseCart(cheeseCart))
   } catch (error) {
@@ -45,6 +46,7 @@ export const changeQuantity = (qty, cheeseId) => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
     const id = res.data.id
+
     await axios.put(`/api/cheeseCart/${id}`, {cheeseId, qty})
     const {data: cheeseCart} = await axios.get(`/api/cheeseCart/${id}`)
     dispatch(getCheeseCart(cheeseCart))
@@ -53,8 +55,26 @@ export const changeQuantity = (qty, cheeseId) => async dispatch => {
   }
 }
 
+export const submitShippingCost = (
+  cheeseCartId,
+  shippingCost
+) => async dispatch => {
+  try {
+    await axios.put(`/api/cheeseCart/quantity/${cheeseCartId}`, {shippingCost})
+
+    const {data: cheeseCart} = await axios.get(
+      `/api/cheeseCart/${cheeseCartId}`
+    )
+
+    dispatch(getCheeseCart(cheeseCart))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const initialState = {
-  cheeseCart: []
+  cheeseCart: [],
+  guestCart: []
 }
 
 export default function cheeseCartReducer(state = initialState, action) {

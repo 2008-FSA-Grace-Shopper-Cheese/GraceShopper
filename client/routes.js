@@ -9,11 +9,15 @@ import {
   UserHome,
   AllCheese,
   SingleCheese,
-  ShoppingCart
+
+  Checkout,
+
+  ShoppingCart,
+  AboutUs
 } from './components'
 
 import {me} from './store'
-import {AboutUs} from './components/about-us'
+//import {AboutUs} from './components/about-us'
 /**
  * COMPONENT
  */
@@ -30,18 +34,25 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+
+        <Route path="/checkout" component={Checkout} />
+
         <Route path="/shoppingCart" component={ShoppingCart} />
+
         <Route exact path="/cheeses" component={AllCheese} />
         <Route path="/cheeses/:cheeseId" component={SingleCheese} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
+            <Route exact path="/" component={UserHome} />
+            <Route path="/aboutus" component={AboutUs} />
           </Switch>
         )}
         <Route path="/homeGuest" component={UserHome} />
         <Route path="/aboutus" component={AboutUs} />
         {/* Displays our Login component as a fallback */}
+
         <Route component={Login} />
       </Switch>
     )
