@@ -6,7 +6,7 @@ import {fetchCheeses} from '../store/cheeses'
 /**
  * COMPONENT
  */
-class UserHome extends React.Component {
+export class UserHome extends React.Component {
   componentDidMount() {
     this.props.getCheeses()
   }
