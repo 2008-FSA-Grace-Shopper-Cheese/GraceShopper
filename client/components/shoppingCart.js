@@ -29,6 +29,7 @@ export class shoppingCart extends React.Component {
       cart = this.props.cheeseCart[0].cheeses
       userId = this.props.cheeseCart[0].id
     }
+
     return (
       <div>
         {this.props.cheeseCart[0] ? (

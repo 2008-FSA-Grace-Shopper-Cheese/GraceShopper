@@ -51,6 +51,24 @@ router.get('/:id/:cheeseId', async (req, res, next) => {
   }
 })
 
+router.put('/quantity/:id', async (req, res, next) => {
+  try {
+    await CheeseCart.update(
+      {
+        shippingCost: req.body.shippingCost
+      },
+      {
+        where: {
+          cartId: req.params.id
+        }
+      }
+    )
+    res.json('OK')
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.put('/:id', async (req, res, next) => {
   try {
     await CheeseCart.update(

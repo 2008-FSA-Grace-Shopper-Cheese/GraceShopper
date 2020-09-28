@@ -9,8 +9,8 @@ const CheeseCart = db.define('CheeseCarts', {
   purchasePrice: {
     type: Sequelize.INTEGER
   },
-  shippingTime: {
-    type: Sequelize.STRING
+  shippingCost: {
+    type: Sequelize.INTEGER
   }
 })
 
