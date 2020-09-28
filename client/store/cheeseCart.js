@@ -73,7 +73,7 @@ export const checkoutComplete = cartId => async dispatch => {
   } catch (error) {
     console.error(error)
   }
-
+}
 
 const initialState = {
   cheeseCart: [],

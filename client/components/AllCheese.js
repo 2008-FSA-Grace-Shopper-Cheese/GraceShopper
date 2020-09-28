@@ -25,10 +25,18 @@ class AllCheese extends React.Component {
       if (localStorage.getItem('cheese')) {
         localCart = JSON.parse(localStorage.getItem('cheese'))
       }
+      let checkInCart = localCart.filter(
+        cheese => cheese.id === Number(cheeseId)
+      )
+      if (checkInCart[0]) {
+        let updatedQty = localCart.map(cheese => {})
+      }
 
       localCart.push(selectedCheese[0])
 
       localStorage.setItem('cheese', JSON.stringify(localCart))
+
+      console.log(localStorage)
     } else this.props.addToCart(cheeseId)
   }
 
