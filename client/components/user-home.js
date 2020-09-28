@@ -29,7 +29,6 @@ class UserHome extends React.Component {
     //easy hash
     let todayPrimeIndex = (cheeses.length - 1) % (todayIndex + 1)
     let todayPrime = cheeses[todayPrimeIndex]
-    console.log(this.props)
     return (
       <div>
         {cheeses[0] ? (
