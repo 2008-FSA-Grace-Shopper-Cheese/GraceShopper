@@ -1,12 +1,20 @@
 const router = require('express').Router()
 const {CheeseCart, Cheese, Cart} = require('../db/models')
-
+const adminOnly = require('./utils/adminOnly')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+//Security: admin only
+router.get('/', adminOnly, async (req, res, next) => {
   try {
+    //Securtity part
+    //  if (!req.user.isAdmin) {
+    //   const error = new Error("Only admin can see all cheeseCarts")
+    //   error.status = 401
+    //   throw error
+    // }
+    // above is security part
     const cheeseCart = await CheeseCart.findAll({
-      order: [['name', 'DESC']]
+      order: [['cartId', 'DESC']]
     })
     res.json(cheeseCart)
   } catch (err) {
@@ -14,6 +22,7 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+//No sequrity needed
 router.get('/userCart', async (req, res, next) => {
   try {
     const cheeseCart = await Cart.findAll({
@@ -33,6 +42,7 @@ router.get('/userCart', async (req, res, next) => {
   }
 })
 
+//No sequrity needed
 router.get('/:cheeseId', async (req, res, next) => {
   try {
     const cheeseCart = await Cart.findOne({
@@ -55,13 +65,20 @@ router.get('/:cheeseId', async (req, res, next) => {
   }
 })
 // this id is CartId
+//Sequrity: only himself can change the qty
 router.put('/quantity/:id', async (req, res, next) => {
   try {
-    // const cart = await Cart.findOne({
-    //   where: {completed: 'false', userId: req.params.id},
-    // })
+    //This is sequrity part
+    const cart = await Cart.findOne({
+      where: {id: req.params.id}
+    })
+    if (req.user.id != cart.userId && !req.user.isAdmin) {
+      const error = new Error("You could not edit someone else's cart")
+      error.status = 401
+      throw error
+    }
 
-    // const cartId = cart.id
+    // above is security part
 
     await CheeseCart.update(
       {
@@ -79,6 +96,7 @@ router.put('/quantity/:id', async (req, res, next) => {
   }
 })
 
+//No security needed
 router.put('/changeQuantity', async (req, res, next) => {
   try {
     const cart = await Cart.findOne({
@@ -106,6 +124,7 @@ router.put('/changeQuantity', async (req, res, next) => {
   }
 })
 
+//No security needed
 router.post('/:cheeseId', async (req, res, next) => {
   try {
     const arr = await Cart.findOrCreate({
@@ -125,7 +144,7 @@ router.post('/:cheeseId', async (req, res, next) => {
         cheeseId: req.params.cheeseId
       }
     })
-    console.log(cheeseCartInstance.quantity)
+    //console.log(cheeseCartInstance.quantity)
     qty = cheeseCartInstance.quantity
 
     await CheeseCart.update(
@@ -145,7 +164,7 @@ router.post('/:cheeseId', async (req, res, next) => {
     next(error)
   }
 })
-
+//No security needed
 router.delete('/:cheeseId', async (req, res, next) => {
   try {
     const cart = await Cart.findOne({
