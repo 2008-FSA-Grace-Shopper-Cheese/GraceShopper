@@ -32,13 +32,16 @@ router.put('/:cartId', async (req, res, next) => {
 
 router.post('/guestCheckout', async (req, res, next) => {
   try {
-    const {cheesecart} = req.body
-    const cart = await Cart.create()
+    const {cheesecart, shippingCost} = req.body
+    const cart = await Cart.create({
+      completed: true
+    })
     await cheesecart.map(cheese => {
       CheeseCart.create({
         cartId: cart.id,
         cheeseId: cheese.id,
-        quantity: cheese.quantity
+        quantity: cheese.quantity,
+        shippingCost
       })
     })
   } catch (err) {
@@ -48,7 +51,6 @@ router.post('/guestCheckout', async (req, res, next) => {
 
 router.get('/history', async (req, res, next) => {
   try {
-    // console.log(req.user)
     const historyCarts = await Cart.findAll({
       where: {
         userId: req.user.id,

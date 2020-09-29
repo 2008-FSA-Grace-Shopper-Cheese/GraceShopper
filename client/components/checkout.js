@@ -4,9 +4,9 @@ import {updateUser} from '../store/user'
 import {
   fetchCheeseCart,
   submitShippingCost,
-  checkoutComplete
+  checkoutComplete,
+  createGuestCart
 } from '../store/cheeseCart'
-import axios from 'axios'
 
 const shippingObj = {
   1000: 'Standard',
@@ -23,13 +23,13 @@ class Checkout extends React.Component {
       phoneNumber: '',
       firstName: '',
       lastName: '',
-      shippingCost: '1000',
+      shippingCost: 1000,
       creditCard: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  async componentDidMount() {
+  componentDidMount() {
     if (this.props.userId) {
       this.props.getCheeseCart()
       this.setState({
@@ -40,8 +40,6 @@ class Checkout extends React.Component {
         address: this.props.user.address
       })
     }
-    const cheeses = JSON.parse(localStorage.getItem('cheese'))
-    await axios.post('api/cart/guestCheckout', {cheesecart: cheeses})
   }
   handleChange(e) {
     this.setState({
@@ -68,6 +66,9 @@ class Checkout extends React.Component {
       )
     } else {
       localStorage.setItem('guestInfo', JSON.stringify(newInfo))
+      const cheeses = JSON.parse(localStorage.getItem('cheese'))
+      const shippingCost = this.state.shippingCost
+      this.props.createGuestCart(cheeses, shippingCost)
     }
 
     this.props.history.push('/fulfillment')
@@ -157,9 +158,9 @@ class Checkout extends React.Component {
                 value={this.state.shippingCost}
                 onChange={this.handleChange}
               >
-                <option value="1000">Standard (5 - 7 days) $10</option>
-                <option value="5000">Express (2 - 3 days) $50</option>
-                <option value="10000">Next Day Shipping (1 day) $100</option>
+                <option value={1000}>Standard (5 - 7 days) $10</option>
+                <option value={5000}>Express (2 - 3 days) $50</option>
+                <option value={10000}>Next Day Shipping (1 day) $100</option>
               </select>
 
               <label htmlFor="creditCard">Credit Card Number:</label>
@@ -217,7 +218,9 @@ const mapDispatch = dispatch => {
       dispatch(submitShippingCost(cheeseCartId, shippingCost))
     },
 
-    checkoutComplete: cartId => dispatch(checkoutComplete(cartId))
+    checkoutComplete: cartId => dispatch(checkoutComplete(cartId)),
+    createGuestCart: (cheeses, shippingCost) =>
+      dispatch(createGuestCart(cheeses, shippingCost))
   }
 }
 
