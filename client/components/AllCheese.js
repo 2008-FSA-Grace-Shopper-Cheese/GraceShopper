@@ -25,7 +25,6 @@ class AllCheese extends React.Component {
   }
   handleClick(e) {
     let localCart = []
-
     let cheeseId = e.target.value
 
     if (!this.props.user.id) {

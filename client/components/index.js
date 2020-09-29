@@ -13,5 +13,5 @@ export {default as SingleCheese} from './SingleCheese'
 
 export {default as Checkout} from './checkout'
 export {default as Fulfillment} from './fulfillment'
-
+export {default as PurchaseHistory} from './purchase-history'
 export {AboutUs} from './about-us.js'

@@ -21,3 +21,21 @@ router.put('/:cartId', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/history', async (req, res, next) => {
+  try {
+    // console.log(req.user)
+    const historyCarts = await Cart.findAll({
+      where: {
+        userId: req.user.id,
+        completed: true
+      },
+      order: [['updatedAt', 'DESC']],
+      include: [{model: Cheese}]
+    })
+
+    res.json(historyCarts)
+  } catch (err) {
+    next(err)
+  }
+})
