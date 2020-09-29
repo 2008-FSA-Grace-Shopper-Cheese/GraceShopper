@@ -41,11 +41,11 @@ describe('User model', () => {
         })
       })
 
-      it('returns true if the address is correct', () => {
+      xit('returns true if the address is correct', () => {
         expect(cody.address === '123 Seasame Street').to.be.equal(true)
       })
 
-      it('returns false if the address is incorrect', () => {
+      xit('returns false if the address is incorrect', () => {
         expect(cody.address === '124 Seasame Street').to.be.equal(false)
       })
     })
@@ -71,11 +71,11 @@ describe('Cheese model', () => {
         })
       })
 
-      it('returns true cheese name is Burrata', () => {
+      xit('returns true cheese name is Burrata', () => {
         expect(cheese.name === 'Burrata').to.be.equal(true)
       })
 
-      it('returns false if the cheese name is not Burrata', () => {
+      xit('returns false if the cheese name is not Burrata', () => {
         expect(cheese.name === 'Burrati').to.be.equal(false)
       })
     })
@@ -93,11 +93,11 @@ describe('Cheese model', () => {
         })
       })
 
-      it('returns true cheese price is correct', () => {
+      xit('returns true cheese price is correct', () => {
         expect(cheese.price === 1599).to.be.equal(true)
       })
 
-      it('returns false if the cheese price is not correct', () => {
+      xit('returns false if the cheese price is not correct', () => {
         expect(cheese.price === 1600).to.be.equal(false)
       })
     })
