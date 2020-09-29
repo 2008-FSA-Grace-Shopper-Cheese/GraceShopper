@@ -89,6 +89,14 @@ export const getHistoryCart = () => async dispatch => {
   }
 }
 
+export const createGuestCart = () => async dispatch => {
+  try {
+    const {data: cartId} = await axios.post('api/cart')
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const initialState = {
   cheeseCart: [],
   historyCart: []
