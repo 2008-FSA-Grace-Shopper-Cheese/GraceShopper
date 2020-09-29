@@ -14,6 +14,7 @@ class Fulfillment extends React.Component {
         cart: this.props.cheeseCart[0].cheeses
       })
     }
+    localStorage.clear()
   }
   render() {
     const randomNum = Math.floor(Math.random() * 100000)

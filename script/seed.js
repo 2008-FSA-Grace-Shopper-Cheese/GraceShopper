@@ -45,8 +45,8 @@ async function seed() {
         'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Burrata2.jpg/1200px-Burrata2.jpg'
     }),
     Cheese.create({
-      name: 'brie',
-      price: '30',
+      name: 'Brie',
+      price: 2000,
       description:
         'Made in Normandy, the home of Camembert, Baby Brie is renowned for its exceptional quality and freshness. This bloomy-rind, creamy cheese packs all of the goodness of French Brie into an 7 ounce wheel. You will love its inviting aroma and palate-pleasing flavor.',
       imageUrl:
@@ -54,7 +54,7 @@ async function seed() {
     }),
     Cheese.create({
       name: 'Camembert',
-      price: '1550',
+      price: 1550,
       description:
         "Camembert is a moist, soft, creamy, surface-ripened cow's milk cheese. It was first made in the late 18th century at Camembert, Normandy, in northern France. It is similar to Brie, which is native to the Brie region of France.",
       imageUrl:
@@ -70,7 +70,7 @@ async function seed() {
     }),
     Cheese.create({
       name: 'Feta',
-      price: '1699',
+      price: 1699,
       description:
         'Feta is a brined curd white cheese made in Greece from sheep milk or from a mixture of sheep and goat milk. It is a crumbly aged cheese, commonly produced in blocks, and has a slightly grainy texture in comparison to other cheeses.',
       imageUrl:
@@ -78,7 +78,7 @@ async function seed() {
     }),
     Cheese.create({
       name: 'Ricotta',
-      price: '344',
+      price: 344,
       description:
         'Ricotta is an Italian whey cheese made from sheep, cow, goat, or Italian water buffalo milk whey left over from the production of other cheeses. Like other whey cheeses, it is made by coagulating the proteins that remain after the casein has been used to make cheese, notably albumin and globulin.',
       imageUrl:
@@ -86,7 +86,7 @@ async function seed() {
     }),
     Cheese.create({
       name: 'Raclette',
-      price: '2199',
+      price: 2199,
       description:
         'Raclette is a semi-hard cheese that is usually fashioned into a wheel of about 6 kg. The Alpine cow milk based dairy product is most commonly used for melting, but is also consumed as a slice. Raclette also is a Swiss dish, also very popular in Savoie, based on heating the cheese and scraping off the melted part. ',
       imageUrl:
@@ -94,7 +94,7 @@ async function seed() {
     }),
     Cheese.create({
       name: 'Queso blanco',
-      price: '599',
+      price: 599,
       description:
         'Queso blanco, literally white cheese in Spanish, can refer to many different kind of cheeses whose only common trait is their white color. The specific cheese referred to depends on the region.',
       imageUrl:
@@ -102,7 +102,7 @@ async function seed() {
     }),
     Cheese.create({
       name: 'Roquefort',
-      price: '2531',
+      price: 2531,
       description:
         "Roquefort is a sheep milk cheese from Southern France, and is one of the world's best known blue cheeses.",
       imageUrl:

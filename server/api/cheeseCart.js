@@ -60,12 +60,6 @@ router.get('/:cheeseId', async (req, res, next) => {
 // this id is CartId
 router.put('/quantity/:id', async (req, res, next) => {
   try {
-    // const cart = await Cart.findOne({
-    //   where: {completed: 'false', userId: req.params.id},
-    // })
-
-    // const cartId = cart.id
-
     await CheeseCart.update(
       {
         shippingCost: req.body.shippingCost
