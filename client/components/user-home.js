@@ -34,12 +34,16 @@ export class UserHome extends React.Component {
         {cheeses[0] ? (
           <div>
             <h3>Welcome, {email ? email : 'Guest'}</h3>
-            <h4>{today}'s Optmize Prime For You:</h4>
+            <h4>{today}'s Cheese of the day!</h4>
             <img width={500} height={500} src={todayPrime.imageUrl} />
             <h2>{todayPrime.name}</h2>
             <p> Description: {todayPrime.description}</p>
             <p>
-              Price:<small>$</small> <strong> {todayPrime.price}</strong>
+              Price:
+              {(todayPrime.price / 100).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+              })}
             </p>
 
             <hr />

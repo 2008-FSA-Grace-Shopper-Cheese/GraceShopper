@@ -28,11 +28,7 @@ const AuthForm = props => {
         <div>
           <button type="submit">{displayName}</button>
         </div>
-        <div>
-          <NavLink to="/homeGuest">
-            <button type="submit">As A Guest</button>
-          </NavLink>
-        </div>
+
         {error && error.response && <div> {error.response.data} </div>}
       </form>
 
