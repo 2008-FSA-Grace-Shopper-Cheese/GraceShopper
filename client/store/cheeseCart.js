@@ -57,11 +57,7 @@ export const submitShippingCost = (
   try {
     await axios.put(`/api/cheeseCart/quantity/${cheeseCartId}`, {shippingCost})
 
-    const {data: cheeseCart} = await axios.get(
-      `/api/cheeseCart/${cheeseCartId}`
-    )
-
-    dispatch(getCheeseCart(cheeseCart))
+    dispatch(getCheeseCart([]))
   } catch (error) {
     console.error(error)
   }
@@ -70,7 +66,8 @@ export const submitShippingCost = (
 export const checkoutComplete = cartId => async dispatch => {
   await axios.put(`/api/cart/${cartId}`)
   try {
-    dispatch(getCheeseCart([]))
+    const emptyArr = []
+    dispatch(getCheeseCart(emptyArr))
   } catch (error) {
     console.error(error)
   }
