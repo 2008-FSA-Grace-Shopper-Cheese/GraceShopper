@@ -8,34 +8,71 @@ import {
   changeQuantity
 } from '../store/cheeseCart'
 
+function GetIndexOfCheese(array, id) {
+  for (let i = 0; i < array.length; ++i) {
+    let currentEle = array[i]
+    if (currentEle.id === id) {
+      return [i]
+    }
+  }
+}
+
 export class shoppingCart extends React.Component {
-  componentDidMount() {
-    this.props.getCheeseCart()
+  constructor() {
+    super()
+    this.state = {
+      rerender: true
+    }
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
   }
-  handleClick(id) {
-    this.props.destroyCheese(id)
+  componentDidMount() {
+    this.props.getCheeseCart()
+  }
+  handleClick(e) {
+    let CheeseId = e.target.value
+    if (this.props.user.id) {
+      this.props.destroyCheese(CheeseId)
+    } else {
+      let storageProducts = JSON.parse(localStorage.getItem('cheese'))
+      let products = storageProducts.filter(
+        cheese => cheese.id !== Number(CheeseId)
+      )
+      localStorage.setItem('cheese', JSON.stringify(products))
+      this.setState({rerender: !this.state.rerender})
+    }
   }
   handleChange(e, id) {
-    this.props.editQuantity(e.target.value, id)
-    console.log('value', e.target.value, 'cheeseId', id)
+    let newQuantity = e.target.value
+    if (this.props.user.id) {
+      this.props.editQuantity(e.target.value, id)
+    } else {
+      let storageProducts = JSON.parse(localStorage.getItem('cheese'))
+      let num = Number(id)
+      // for(let i = 0; i < storageProducts.length; ++i){
+      //   let currentEle = storageProducts[i]
+      //   if(currentEle.id === Number(newQuantity)){
+      //     currentEle.quantity = newQuantity
+      //   }
+      // }
+      let index = GetIndexOfCheese(storageProducts, num)
+      storageProducts[index].quantity = Number(newQuantity)
+      localStorage.setItem('cheese', JSON.stringify(storageProducts))
+
+      this.setState({rerender: !this.state.rerender})
+    }
   }
 
   render() {
     let cart
     let userId
-    let quantity
-
     if (this.props.cheeseCart[0]) {
       cart = this.props.cheeseCart[0].cheeses
       userId = this.props.user.id
     } else {
       cart = JSON.parse(localStorage.getItem('cheese'))
-      console.log('cart for guest', cart)
     }
 
-    console.log('>>>', this.props)
     return (
       <div>
         {cart ? (
@@ -49,7 +86,11 @@ export class shoppingCart extends React.Component {
                   name={cheese.name}
                   image={cheese.imageUrl}
                   price={cheese.price}
-                  // quantity={cheese.CheeseCarts.quantity}
+                  quantity={
+                    cheese.CheeseCarts
+                      ? cheese.CheeseCarts.quantity
+                      : cheese.quantity
+                  }
                   handleChange={this.handleChange}
                   handleClick={this.handleClick}
                 />

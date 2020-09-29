@@ -5,6 +5,16 @@ import {fetchCheeses} from '../store/cheeses'
 import axios from 'axios'
 import {fetchCheeseCart} from '../store/cheeseCart'
 
+function ItemName(arr1, arr2) {
+  for (let i = 0; i < arr1.length; ++i) {
+    let currentEle = arr1[i]
+    if (currentEle.name === arr2[0].name) {
+      return i
+    }
+  }
+  return -1
+}
+
 class AllCheese extends React.Component {
   constructor() {
     super()
@@ -15,8 +25,6 @@ class AllCheese extends React.Component {
   }
   handleClick(e) {
     let localCart = []
-    if (!localStorage.getItem('cheese'))
-      localStorage.setItem('cheese', JSON.stringify(localCart))
 
     let cheeseId = e.target.value
 
@@ -24,26 +32,19 @@ class AllCheese extends React.Component {
       let selectedCheese = this.props.cheeses.filter(
         cheese => cheese.id === Number(cheeseId)
       )
+      selectedCheese[0].quantity = 1
 
-      localCart = JSON.parse(localStorage.getItem('cheese'))
+      if (localStorage.getItem('cheese')) {
+        localCart = JSON.parse(localStorage.getItem('cheese'))
+      }
 
-      //      console.log("localCart.length",localCart.length)
-      // console.log("localCart[0]",localCart[0])
-      console.log(localStorage)
-
-      let findOrNot = 0
-      localCart.map(element => {
-        if (element.id == cheeseId) {
-          element.quantity++
-          findOrNot++
-        }
-      })
-      console.log(findOrNot)
-      if (findOrNot === 0) {
-        selectedCheese[0].quantity = 1
+      if (ItemName(localCart, selectedCheese) >= 0) {
+        let num = ItemName(localCart, selectedCheese)
+        localCart[num].quantity += 1
+      } else {
         localCart.push(selectedCheese[0])
       }
-      console.log(localCart)
+
       localStorage.setItem('cheese', JSON.stringify(localCart))
     } else this.props.addToCart(cheeseId)
   }
