@@ -9,7 +9,7 @@ class Fulfillment extends React.Component {
     }
   }
   componentDidMount() {
-    if (this.props.cheeseCart[0].cheeses) {
+    if (this.props.user.id) {
       this.setState({
         cart: this.props.cheeseCart[0].cheeses
       })
@@ -17,8 +17,15 @@ class Fulfillment extends React.Component {
   }
   render() {
     const randomNum = Math.floor(Math.random() * 100000)
-    const user = this.props.user
-    const cart = this.state.cart
+    let user
+    let cart
+    if (this.props.user.id) {
+      user = this.props.user
+      cart = this.state.cart
+    } else {
+      cart = JSON.parse(localStorage.getItem('cheese'))
+      user = JSON.parse(localStorage.getItem('guestInfo'))
+    }
     return (
       <div>
         <h1>Order #{randomNum}</h1>
@@ -27,21 +34,34 @@ class Fulfillment extends React.Component {
           confirmation.
         </div>
         <div>You ordered:</div>
-        <ul>
-          {cart.map(cheese => {
-            return (
-              <li key={cheese.id}>
-                {cheese.name} Quantity:
-                {cart.reduce((accumulator, elem) => {
-                  if (elem.name === cheese.name) {
-                    accumulator += elem.CheeseCarts.quantity
-                  }
-                  return accumulator
-                }, 0)}
-              </li>
-            )
-          })}
-        </ul>
+
+        {this.props.user.id
+          ? cart.map(cheese => {
+              return (
+                <ul key={cheese.id}>
+                  <li>
+                    {cheese.name} Quantity:
+                    {cart.reduce((accumulator, elem) => {
+                      if (elem.name === cheese.name) {
+                        accumulator += elem.CheeseCarts.quantity
+                      }
+                      return accumulator
+                    }, 0)}
+                  </li>
+                </ul>
+              )
+            })
+          : cart.map(cheese => {
+              return (
+                <ul key={cheese.id}>
+                  <li>
+                    {cheese.name} Quantity:
+                    {cheese.quantity}
+                  </li>
+                </ul>
+              )
+            })}
+
         <h2>Billing and Shipping Info</h2>
         <div>First Name: {user.firstName}</div>
         <div>Last Name: {user.lastName}</div>

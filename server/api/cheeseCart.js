@@ -16,6 +16,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/userCart', async (req, res, next) => {
   try {
+    if (!req.user) {
+      return res.sendStatus(500)
+    }
     const cheeseCart = await Cart.findAll({
       where: {
         userId: req.user.id,

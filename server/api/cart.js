@@ -3,6 +3,14 @@ const {CheeseCart, Cheese, Cart} = require('../db/models')
 
 module.exports = router
 
+router.post('/', async (req, res, next) => {
+  const cart = Cart.create({
+    completed: true
+  })
+  console.log(cart)
+  res.send(cart.id)
+})
+
 router.put('/:cartId', async (req, res, next) => {
   try {
     const [numberOfUpdated, updatedCart] = await Cart.update(
