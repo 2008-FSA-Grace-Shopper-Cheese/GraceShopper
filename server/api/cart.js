@@ -30,6 +30,22 @@ router.put('/:cartId', async (req, res, next) => {
   }
 })
 
+router.post('/guestCheckout', async (req, res, next) => {
+  try {
+    const {cheesecart} = req.body
+    const cart = await Cart.create()
+    await cheesecart.map(cheese => {
+      CheeseCart.create({
+        cartId: cart.id,
+        cheeseId: cheese.id,
+        quantity: cheese.quantity
+      })
+    })
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/history', async (req, res, next) => {
   try {
     // console.log(req.user)

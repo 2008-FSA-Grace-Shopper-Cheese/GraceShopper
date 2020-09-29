@@ -6,6 +6,7 @@ import {
   submitShippingCost,
   checkoutComplete
 } from '../store/cheeseCart'
+import axios from 'axios'
 
 const shippingObj = {
   1000: 'Standard',
@@ -28,7 +29,7 @@ class Checkout extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  componentDidMount() {
+  async componentDidMount() {
     if (this.props.userId) {
       this.props.getCheeseCart()
       this.setState({
@@ -39,6 +40,8 @@ class Checkout extends React.Component {
         address: this.props.user.address
       })
     }
+    const cheeses = JSON.parse(localStorage.getItem('cheese'))
+    await axios.post('api/cart/guestCheckout', {cheesecart: cheeses})
   }
   handleChange(e) {
     this.setState({
@@ -174,10 +177,19 @@ class Checkout extends React.Component {
               <h2>Order Summary: </h2>
               <div> Items: {quantity}</div>
               <div>Shipping: {shippingObj[this.state.shippingCost]} </div>
-              <div>Estimated tax to be collected: $ {tax}</div>
+              <div>
+                Estimated tax to be collected:{' '}
+                {(tax / 100).toLocaleString('en-US', {
+                  style: 'currency',
+                  currency: 'USD'
+                })}
+              </div>
               <h2>
-                Total: ${' '}
-                {((totalPrice + tax + Number(this.state.shippingCost)) / 100).toLocaleString('en-US', {
+                Total:{' '}
+                {(
+                  (totalPrice + tax + Number(this.state.shippingCost)) /
+                  100
+                ).toLocaleString('en-US', {
                   style: 'currency',
                   currency: 'USD'
                 })}

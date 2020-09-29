@@ -91,7 +91,7 @@ export const getHistoryCart = () => async dispatch => {
 
 export const createGuestCart = () => async dispatch => {
   try {
-    const {data: cartId} = await axios.post('api/cart')
+    const {data: cartId} = await axios.post('api/cart/guestCheckout')
   } catch (error) {
     console.error(error)
   }
