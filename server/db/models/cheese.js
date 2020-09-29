@@ -21,14 +21,6 @@ const Cheese = db.define('cheese', {
     type: Sequelize.TEXT,
     allowNull: false,
     defaultValue: 'https://images.heb.com/is/image/HEBGrocery/001199858'
-  },
-  inventory: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 44,
-    validate: {
-      min: 0
-    }
   }
 })
 
