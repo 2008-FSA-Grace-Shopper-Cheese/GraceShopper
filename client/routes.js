@@ -13,7 +13,8 @@ import {
   Checkout,
   ShoppingCart,
   AboutUs,
-  PurchaseHistory
+  PurchaseHistory,
+  Support
 } from './components'
 
 import {me} from './store'
@@ -36,6 +37,7 @@ class Routes extends Component {
         <Route path="/home" component={UserHome} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/support" component={Support} />
 
         <Route path="/checkout" component={Checkout} />
         <Route path="/fulfillment" component={Fulfillment} />
