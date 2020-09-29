@@ -51,7 +51,8 @@ class Checkout extends React.Component {
       address: this.props.user.address || this.state.address,
       phoneNumber: this.props.user.phoneNumber || this.state.phoneNumber,
       firstName: this.props.user.firstName || this.state.firstName,
-      lastName: this.props.user.lastName || this.state.lastName
+      lastName: this.props.user.lastName || this.state.lastName,
+      email: this.props.user.email || this.state.email
     }
     if (this.props.user.id) {
       this.props.updateUser(this.props.user.id, newInfo)
