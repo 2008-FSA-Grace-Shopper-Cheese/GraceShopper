@@ -14,8 +14,8 @@ export class shoppingCart extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleClick = this.handleClick.bind(this)
   }
-  handleClick(id, userId) {
-    this.props.destroyCheese(id, userId)
+  handleClick(id) {
+    this.props.destroyCheese(id)
   }
   handleChange(e, id) {
     this.props.editQuantity(e.target.value, id)
@@ -25,26 +25,31 @@ export class shoppingCart extends React.Component {
   render() {
     let cart
     let userId
+    let quantity
+
     if (this.props.cheeseCart[0]) {
       cart = this.props.cheeseCart[0].cheeses
-      userId = this.props.cheeseCart[0].id
+      userId = this.props.user.id
+    } else {
+      cart = JSON.parse(localStorage.getItem('cheese'))
+      console.log('cart for guest', cart)
     }
 
+    console.log('>>>', this.props)
     return (
       <div>
-        {this.props.cheeseCart[0] ? (
+        {cart ? (
           <div className="shoppingCart">
             <h2>Shopping Cart</h2>
             <div>
               {cart.map(cheese => (
                 <CartCheese
                   key={cheese.id}
-                  userId={userId}
                   id={cheese.id}
                   name={cheese.name}
                   image={cheese.imageUrl}
                   price={cheese.price}
-                  quantity={cheese.CheeseCarts.quantity}
+                  // quantity={cheese.CheeseCarts.quantity}
                   handleChange={this.handleChange}
                   handleClick={this.handleClick}
                 />
@@ -64,7 +69,8 @@ export class shoppingCart extends React.Component {
 }
 const mapState = state => {
   return {
-    cheeseCart: state.cheeseCartReducer.cheeseCart
+    cheeseCart: state.cheeseCartReducer.cheeseCart,
+    user: state.user
   }
 }
 
@@ -73,8 +79,8 @@ const mapDispatch = dispatch => {
     getCheeseCart: () => {
       dispatch(fetchCheeseCart())
     },
-    destroyCheese: (cheeseId, userId) => {
-      dispatch(deleteCheese(cheeseId, userId))
+    destroyCheese: cheeseId => {
+      dispatch(deleteCheese(cheeseId))
     },
     editQuantity: (qty, cheeseId) => {
       dispatch(changeQuantity(qty, cheeseId))

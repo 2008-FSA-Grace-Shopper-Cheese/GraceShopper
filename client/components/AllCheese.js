@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {fetchCheeses} from '../store/cheeses'
 import axios from 'axios'
 import {fetchCheeseCart} from '../store/cheeseCart'
+
 class AllCheese extends React.Component {
   constructor() {
     super()
@@ -13,8 +14,38 @@ class AllCheese extends React.Component {
     this.props.getCheeses()
   }
   handleClick(e) {
+    let localCart = []
+    if (!localStorage.getItem('cheese'))
+      localStorage.setItem('cheese', JSON.stringify(localCart))
+
     let cheeseId = e.target.value
-    this.props.addToCart(cheeseId)
+
+    if (!this.props.user.id) {
+      let selectedCheese = this.props.cheeses.filter(
+        cheese => cheese.id === Number(cheeseId)
+      )
+
+      localCart = JSON.parse(localStorage.getItem('cheese'))
+
+      //      console.log("localCart.length",localCart.length)
+      // console.log("localCart[0]",localCart[0])
+      console.log(localStorage)
+
+      let findOrNot = 0
+      localCart.map(element => {
+        if (element.id == cheeseId) {
+          element.quantity++
+          findOrNot++
+        }
+      })
+      console.log(findOrNot)
+      if (findOrNot === 0) {
+        selectedCheese[0].quantity = 1
+        localCart.push(selectedCheese[0])
+      }
+      console.log(localCart)
+      localStorage.setItem('cheese', JSON.stringify(localCart))
+    } else this.props.addToCart(cheeseId)
   }
 
   render() {
@@ -50,21 +81,17 @@ class AllCheese extends React.Component {
 }
 
 const mapState = state => {
-  return {cheeses: state.cheesesReducer.cheeses}
+  return {
+    cheeses: state.cheesesReducer.cheeses,
+    user: state.user
+  }
 }
 
 const mapDispatch = dispatch => {
   return {
     getCheeses: () => dispatch(fetchCheeses()),
     addToCart: async cheeseId => {
-      const res = await axios.get('/auth/me')
-      const id = res.data.id
-//       console.log('now id is', id)
-//       if (!id) {
-//         sessionStorage.guestCart = {cheese1: 222}
-//       }
-//       console.log('sessionStorage.guestCart is', sessionStorage.guestCart)
-      await axios.post(`/api/cheeseCart/${id}/${cheeseId}`)
+      await axios.post(`/api/cheeseCart/${cheeseId}`)
       dispatch(fetchCheeseCart())
     }
   }

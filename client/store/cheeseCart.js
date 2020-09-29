@@ -23,19 +23,16 @@ export const deletedCheeseCart = cheese => {
 
 export const fetchCheeseCart = () => async dispatch => {
   try {
-    const res = await axios.get('/auth/me')
-    const id = res.data.id
-    console.log('fresh cart redux==', id)
-    const {data: cheeseCart} = await axios.get(`/api/cheeseCart/${id}`)
+    const {data: cheeseCart} = await axios.get(`/api/cheeseCart/userCart`)
     dispatch(getCheeseCart(cheeseCart))
   } catch (error) {
     console.error(error)
   }
 }
 
-export const deleteCheese = (cheeseId, userId) => async dispatch => {
+export const deleteCheese = cheeseId => async dispatch => {
   try {
-    await axios.delete(`/api/cheeseCart/${userId}/${cheeseId}`)
+    await axios.delete(`/api/cheeseCart/${cheeseId}`)
     dispatch(fetchCheeseCart())
   } catch (error) {
     console.error(error)
@@ -44,11 +41,8 @@ export const deleteCheese = (cheeseId, userId) => async dispatch => {
 
 export const changeQuantity = (qty, cheeseId) => async dispatch => {
   try {
-    const res = await axios.get('/auth/me')
-    const id = res.data.id
-
-    await axios.put(`/api/cheeseCart/${id}`, {cheeseId, qty})
-    const {data: cheeseCart} = await axios.get(`/api/cheeseCart/${id}`)
+    await axios.put(`/api/cheeseCart/changeQuantity`, {cheeseId, qty})
+    const {data: cheeseCart} = await axios.get(`/api/cheeseCart/userCart`)
     dispatch(getCheeseCart(cheeseCart))
   } catch (error) {
     console.error(error)
