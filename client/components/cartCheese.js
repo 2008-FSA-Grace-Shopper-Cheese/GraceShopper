@@ -12,7 +12,7 @@ export default class cartCheese extends Component {
       handleClick,
       handleChange
     } = this.props
-    console.log('this is the quantity', quantity)
+
     return (
       <div className="item_in_Checkout">
         <img
