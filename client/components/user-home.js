@@ -35,7 +35,7 @@ export class UserHome extends React.Component {
           <div>
             <h3>Welcome, {email ? email : 'Guest'}</h3>
             <h4>{today}'s Cheese of the day!</h4>
-            <img width={500} height={500} src={todayPrime.imageUrl} />
+            <img width={200} height={200} src={todayPrime.imageUrl} />
             <h2>{todayPrime.name}</h2>
             <p> Description: {todayPrime.description}</p>
             <p>
