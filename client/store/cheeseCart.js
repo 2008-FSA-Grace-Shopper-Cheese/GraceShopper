@@ -5,6 +5,7 @@ import axios from 'axios'
 const GET_CHEESECART = 'GET_CHEESECART'
 const CHANGE_QUANTITY = 'CHANGE_QUANTITY'
 const DELETE_CHEESE = 'DELETE_CHEESE'
+const HISTORY_CART = 'HISTORY_CART'
 
 //action creator
 
@@ -75,9 +76,25 @@ export const checkoutComplete = cartId => async dispatch => {
   }
 }
 
+const gotHistoryCart = historyCarts => {
+  return {
+    type: HISTORY_CART,
+    historyCarts
+  }
+}
+export const getHistoryCart = () => async dispatch => {
+  try {
+    const {data: buyhistory} = await axios.get('api/cart/history')
+
+    dispatch(gotHistoryCart(buyhistory))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 const initialState = {
   cheeseCart: [],
-  guestCart: []
+  historyCart: []
 }
 
 export default function cheeseCartReducer(state = initialState, action) {
@@ -91,6 +108,8 @@ export default function cheeseCartReducer(state = initialState, action) {
           cheese => cheese.id !== action.cheeseId
         )
       }
+    case HISTORY_CART:
+      return {...state, historyCart: action.historyCarts}
     default:
       return state
   }

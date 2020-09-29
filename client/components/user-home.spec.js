@@ -25,9 +25,7 @@ describe('UserHome', () => {
 describe('CartCheese', () => {
   let cartCheese
   beforeEach(() => {
-    cartCheese = shallow(
-      <CartCheese name="swiss" price="1399" quantity="4" />
-    )
+    cartCheese = shallow(<CartCheese name="swiss" price="1399" quantity="4" />)
   })
 
   it('renders a id, name, price, quantity', () => {

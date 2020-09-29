@@ -4,10 +4,7 @@ import {updateUser} from '../store/user'
 import {
   fetchCheeseCart,
   submitShippingCost,
-
-
   checkoutComplete
-
 } from '../store/cheeseCart'
 
 const shippingObj = {
@@ -59,7 +56,6 @@ class Checkout extends React.Component {
       this.props.cheeseCart[0].cheeses[0].CheeseCarts.cartId
     )
     this.props.history.push('/fulfillment')
-
   }
   render() {
     let cart
@@ -178,7 +174,6 @@ const mapDispatch = dispatch => {
     },
 
     checkoutComplete: cartId => dispatch(checkoutComplete(cartId))
-
   }
 }
 

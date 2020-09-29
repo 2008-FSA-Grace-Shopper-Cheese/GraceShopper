@@ -7,7 +7,7 @@ import {NavLink} from 'react-router-dom'
  * COMPONENT
  */
 const AuthForm = props => {
-  const guestSigh = props.guestSubmit
+  // const guestSigh = props.guestSubmit
   const {name, displayName, handleSubmit, error} = props
 
   return (
@@ -28,16 +28,14 @@ const AuthForm = props => {
         <div>
           <button type="submit">{displayName}</button>
         </div>
-
+        <div>
+          <NavLink to="/homeGuest">
+            <button type="submit">As A Guest</button>
+          </NavLink>
+        </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <div>
-        <NavLink to="/homeGuest">
-          <button onClick={() => guestSigh()} type="submit">
-            As A Guest
-          </button>
-        </NavLink>
-      </div>
+
       <a href="/auth/google">{displayName} with Google</a>
     </div>
   )
@@ -67,11 +65,10 @@ const mapSignup = state => {
 }
 
 const mapDispatch = dispatch => {
-  let guestNumber = Math.floor(Math.random() * 111111111111)
-  console.log('guestNumber', guestNumber)
+  //let guestNumber = Math.floor(Math.random() * 111111111111)
   return {
-    guestSubmit: () =>
-      dispatch(auth(`${guestNumber}@fullstack.com`, '123', 'signup')),
+    // guestSubmit: () =>
+    //   dispatch(auth(`${guestNumber}@fullstack.com`, '123', 'signup')),
     handleSubmit(evt) {
       evt.preventDefault()
       const formName = evt.target.name

@@ -44,10 +44,7 @@ class AllCheese extends React.Component {
         localCart.push(selectedCheese[0])
       }
 
-
       localStorage.setItem('cheese', JSON.stringify(localCart))
-
-      console.log(localStorage)
     } else this.props.addToCart(cheeseId)
   }
 
