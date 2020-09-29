@@ -29,10 +29,16 @@ class Checkout extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   componentDidMount() {
-    this.props.getCheeseCart()
-    this.setState({
-      email: this.props.user.email
-    })
+    if (this.props.userId) {
+      this.props.getCheeseCart()
+      this.setState({
+        email: this.props.user.email,
+        firstName: this.props.user.firstName,
+        lastName: this.props.user.lastName,
+        phoneNumber: this.props.user.phoneNumber,
+        address: this.props.user.address
+      })
+    }
   }
   handleChange(e) {
     this.setState({
@@ -42,45 +48,71 @@ class Checkout extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     const newInfo = {
-      address: this.state.address,
-      phoneNumber: this.state.phoneNumber,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName
+      address: this.props.user.address || this.state.address,
+      phoneNumber: this.props.user.phoneNumber || this.state.phoneNumber,
+      firstName: this.props.user.firstName || this.state.firstName,
+      lastName: this.props.user.lastName || this.state.lastName,
+      email: this.props.user.email || this.state.email
     }
-    this.props.updateUser(this.props.user.id, newInfo)
-    const shippingCost = Number(this.state.shippingCost)
+    if (this.props.user.id) {
+      this.props.updateUser(this.props.user.id, newInfo)
+      const shippingCost = Number(this.state.shippingCost)
 
-    this.props.submitShippingCost(this.props.cheeseCart[0].id, shippingCost)
+      this.props.submitShippingCost(this.props.cheeseCart[0].id, shippingCost)
 
-    this.props.checkoutComplete(
-      this.props.cheeseCart[0].cheeses[0].CheeseCarts.cartId
-    )
+      this.props.checkoutComplete(
+        this.props.cheeseCart[0].cheeses[0].CheeseCarts.cartId
+      )
+    } else {
+      localStorage.setItem('guestInfo', JSON.stringify(newInfo))
+    }
+
     this.props.history.push('/fulfillment')
   }
   render() {
     let cart
     let totalPrice
     let tax
-    if (this.props.cheeseCart[0]) {
+    let quantity
+    if (this.props.user.id) {
       cart = this.props.cheeseCart[0].cheeses
-      totalPrice =
-        this.props.cheeseCart[0].cheeses.reduce((accumulator, elem) => {
-          return accumulator + elem.price * elem.CheeseCarts.quantity
-        }, 0) / 100
 
-      tax = Math.floor(totalPrice * 0.08875) / 100
+      quantity = cart.reduce((accumulator, elem) => {
+        return accumulator + elem.CheeseCarts.quantity
+      }, 0)
+
+      totalPrice = this.props.cheeseCart[0].cheeses.reduce(
+        (accumulator, elem) => {
+          return accumulator + elem.price * elem.CheeseCarts.quantity
+        },
+        0
+      )
+    } else {
+      let storageProducts = JSON.parse(localStorage.getItem('cheese'))
+
+      cart = storageProducts
+
+      quantity = cart.reduce((accumulator, elem) => {
+        return accumulator + elem.quantity
+      }, 0)
+
+      totalPrice = cart.reduce((accumulator, elem) => {
+        return accumulator + elem.price * elem.quantity
+      }, 0)
     }
+
+    tax = totalPrice * 0.08875
 
     return (
       <div>
-        {this.props.cheeseCart[0] ? (
+        {totalPrice ? (
           <div>
             <form onSubmit={this.handleSubmit}>
               <label htmlFor="firstName">First Name:</label>
               <input
                 type="text"
                 name="firstName"
-                value={this.state.firstName}
+                value={this.props.user.firstName || this.state.firstName}
                 onChange={this.handleChange}
               />
 
@@ -88,7 +120,7 @@ class Checkout extends React.Component {
               <input
                 type="text"
                 name="lastName"
-                value={this.state.lastName}
+                value={this.props.user.lastName || this.state.lastName}
                 onChange={this.handleChange}
               />
 
@@ -96,7 +128,7 @@ class Checkout extends React.Component {
               <input
                 type="text"
                 name="address"
-                value={this.state.address}
+                value={this.props.user.address || this.state.address}
                 onChange={this.handleChange}
               />
 
@@ -104,7 +136,7 @@ class Checkout extends React.Component {
               <input
                 type="text"
                 name="phoneNumber"
-                value={this.state.phoneNumber}
+                value={this.props.user.phoneNumber || this.state.phoneNumber}
                 onChange={this.handleChange}
               />
 
@@ -129,7 +161,7 @@ class Checkout extends React.Component {
 
               <label htmlFor="creditCard">Credit Card Number:</label>
               <input
-                type="text"
+                type="number"
                 name="creditCard"
                 value={this.state.creditCard}
                 onChange={this.handleChange}
@@ -140,18 +172,12 @@ class Checkout extends React.Component {
 
             <div>
               <h2>Order Summary: </h2>
-              <div>
-                {' '}
-                Items:
-                {cart.reduce((accumulator, elem) => {
-                  return accumulator + elem.CheeseCarts.quantity
-                }, 0)}
-              </div>
+              <div> Items: {quantity}</div>
               <div>Shipping: {shippingObj[this.state.shippingCost]} </div>
               <div>Estimated tax to be collected: $ {tax}</div>
               <h2>
                 Total: ${' '}
-                {((totalPrice + tax) / 100).toLocaleString('en-US', {
+                {((totalPrice + tax + Number(this.state.shippingCost)) / 100).toLocaleString('en-US', {
                   style: 'currency',
                   currency: 'USD'
                 })}
