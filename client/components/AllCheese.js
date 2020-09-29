@@ -15,19 +15,35 @@ class AllCheese extends React.Component {
   }
   handleClick(e) {
     let localCart = []
+    if (!localStorage.getItem('cheese'))
+      localStorage.setItem('cheese', JSON.stringify(localCart))
+
     let cheeseId = e.target.value
 
     if (!this.props.user.id) {
       let selectedCheese = this.props.cheeses.filter(
         cheese => cheese.id === Number(cheeseId)
       )
-      selectedCheese[0].quantity = 1
-      if (localStorage.getItem('cheese')) {
-        localCart = JSON.parse(localStorage.getItem('cheese'))
+
+      localCart = JSON.parse(localStorage.getItem('cheese'))
+
+      //      console.log("localCart.length",localCart.length)
+      // console.log("localCart[0]",localCart[0])
+      console.log(localStorage)
+
+      let findOrNot = 0
+      localCart.map(element => {
+        if (element.id == cheeseId) {
+          element.quantity++
+          findOrNot++
+        }
+      })
+      console.log(findOrNot)
+      if (findOrNot === 0) {
+        selectedCheese[0].quantity = 1
+        localCart.push(selectedCheese[0])
       }
-
-      localCart.push(selectedCheese[0])
-
+      console.log(localCart)
       localStorage.setItem('cheese', JSON.stringify(localCart))
     } else this.props.addToCart(cheeseId)
   }
