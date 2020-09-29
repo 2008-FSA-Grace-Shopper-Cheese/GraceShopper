@@ -25,6 +25,9 @@ router.get('/', adminOnly, async (req, res, next) => {
 //No sequrity needed
 router.get('/userCart', async (req, res, next) => {
   try {
+    if (!req.user) {
+      return res.sendStatus(500)
+    }
     const cheeseCart = await Cart.findAll({
       where: {
         userId: req.user.id,

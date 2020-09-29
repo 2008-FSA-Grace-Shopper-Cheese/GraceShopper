@@ -4,6 +4,14 @@ const {CheeseCart, Cheese, Cart} = require('../db/models')
 module.exports = router
 
 //This route is for order submit changing cart state
+router.post('/', async (req, res, next) => {
+  const cart = Cart.create({
+    completed: true
+  })
+  console.log(cart)
+  res.send(cart.id)
+})
+
 router.put('/:cartId', async (req, res, next) => {
   try {
     //security part :only user himself can change completed to true
@@ -40,6 +48,25 @@ router.put('/:cartId', async (req, res, next) => {
 })
 
 //This route is for user seeing his purchase history
+router.post('/guestCheckout', async (req, res, next) => {
+  try {
+    const {cheesecart, shippingCost} = req.body
+    const cart = await Cart.create({
+      completed: true
+    })
+    await cheesecart.map(cheese => {
+      CheeseCart.create({
+        cartId: cart.id,
+        cheeseId: cheese.id,
+        quantity: cheese.quantity,
+        shippingCost
+      })
+    })
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/history', async (req, res, next) => {
   try {
     const historyCarts = await Cart.findAll({
