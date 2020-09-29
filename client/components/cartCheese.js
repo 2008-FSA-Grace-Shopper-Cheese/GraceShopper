@@ -24,8 +24,10 @@ export default class cartCheese extends Component {
         <div className="checkoutItem_info">
           <p className="checkoutItem_Name">{name}</p>
           <p className="checkoutItem_Price">
-            <small>$</small>
-            <strong>{price}</strong>
+            {(price / 100).toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD'
+            })}
           </p>
           <div>
             <select

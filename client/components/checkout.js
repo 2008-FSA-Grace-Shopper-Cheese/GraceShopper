@@ -8,9 +8,9 @@ import {
 } from '../store/cheeseCart'
 
 const shippingObj = {
-  '1000': 'Standard',
-  '5000': 'Express',
-  '10000': 'Next-Day'
+  1000: 'Standard',
+  5000: 'Express',
+  10000: 'Next-Day'
 }
 
 class Checkout extends React.Component {
@@ -149,7 +149,13 @@ class Checkout extends React.Component {
               </div>
               <div>Shipping: {shippingObj[this.state.shippingCost]} </div>
               <div>Estimated tax to be collected: $ {tax}</div>
-              <h2>Total: $ {Math.floor((totalPrice + tax) * 100) / 100}</h2>
+              <h2>
+                Total: ${' '}
+                {((totalPrice + tax) / 100).toLocaleString('en-US', {
+                  style: 'currency',
+                  currency: 'USD'
+                })}
+              </h2>
             </div>
           </div>
         ) : null}

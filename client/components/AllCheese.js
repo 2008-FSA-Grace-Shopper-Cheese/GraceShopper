@@ -61,6 +61,13 @@ class AllCheese extends React.Component {
                   <Link to={`/cheeses/${cheese.id}`}>
                     <div>{cheese.name}</div>
                   </Link>
+                  <p>
+                    Price:{' '}
+                    {(cheese.price / 100).toLocaleString('en-US', {
+                      style: 'currency',
+                      currency: 'USD'
+                    })}
+                  </p>
                   <button
                     onClick={this.handleClick}
                     value={cheese.id}

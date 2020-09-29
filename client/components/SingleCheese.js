@@ -16,7 +16,11 @@ class SingleCheese extends React.Component {
         <h2>{cheese.name}</h2>
         <p> Description: {cheese.description}</p>
         <p>
-          Price:<small>$</small> <strong> {cheese.price}</strong>
+          Price:{' '}
+          {(cheese.price / 100).toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD'
+          })}
         </p>
         <button type="button">Add to Cart</button>
       </div>

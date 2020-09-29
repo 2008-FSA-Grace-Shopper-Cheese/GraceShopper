@@ -39,7 +39,11 @@ export class UserHome extends React.Component {
             <h2>{todayPrime.name}</h2>
             <p> Description: {todayPrime.description}</p>
             <p>
-              Price:<small>$</small> <strong> {todayPrime.price}</strong>
+              Price:
+              {(todayPrime.price / 100).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD'
+              })}
             </p>
 
             <hr />
