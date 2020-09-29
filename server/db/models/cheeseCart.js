@@ -6,9 +6,6 @@ const CheeseCart = db.define('CheeseCarts', {
     type: Sequelize.INTEGER,
     defaultValue: 0
   },
-  purchasePrice: {
-    type: Sequelize.INTEGER
-  },
   shippingCost: {
     type: Sequelize.INTEGER
   }
