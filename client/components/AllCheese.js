@@ -4,6 +4,8 @@ import {Link} from 'react-router-dom'
 import {fetchCheeses} from '../store/cheeses'
 import axios from 'axios'
 import {fetchCheeseCart} from '../store/cheeseCart'
+import Button from '@material-ui/core/Button'
+import Snackbar from '@material-ui/core/Snackbar'
 
 function ItemName(arr1, arr2) {
   for (let i = 0; i < arr1.length; ++i) {
@@ -18,7 +20,11 @@ function ItemName(arr1, arr2) {
 class AllCheese extends React.Component {
   constructor() {
     super()
+    this.state = {
+      open: false
+    }
     this.handleClick = this.handleClick.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
   componentDidMount() {
     this.props.getCheeses()
@@ -46,6 +52,14 @@ class AllCheese extends React.Component {
 
       localStorage.setItem('cheese', JSON.stringify(localCart))
     } else this.props.addToCart(cheeseId)
+    this.setState({open: true})
+  }
+  handleClose(event, reason) {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    this.setState({open: false})
   }
 
   render() {
@@ -75,6 +89,12 @@ class AllCheese extends React.Component {
                   >
                     Add to Cart
                   </button>
+                  <Snackbar
+                    open={this.state.open}
+                    autoHideDuration={600}
+                    onClose={this.handleClose}
+                    message="Cheese was added to cart"
+                  />
                 </div>
               )
             })}
