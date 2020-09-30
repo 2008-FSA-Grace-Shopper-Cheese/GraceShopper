@@ -1,5 +1,7 @@
 body {
-  font-family: sans-serif;
+  font-family: monospace;
+  background-color: rgb(224, 210, 184);
+  text-align: center;
 }
 
 a {
@@ -18,4 +20,10 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+button {
+  background-color: beige;
+  border: 0px;
+  margin: 10px;
 }
